@@ -1,0 +1,15 @@
+{
+  "name": "Uzquiz — O'zbekcha viktorina",
+  "short_name": "Uzquiz",
+  "description": "O'zbek tilidagi zamonaviy viktorina o'yini: 6 raund, 42 savol.",
+  "lang": "uz",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#120C2B",
+  "theme_color": "#120C2B",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
