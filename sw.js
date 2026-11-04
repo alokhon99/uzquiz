@@ -1,5 +1,5 @@
 // Uzquiz service worker — oflayn rejim uchun keshlash.
-const CACHE = "uzquiz-v2";
+const CACHE = "uzquiz-v3";
 const ASSETS = [
   "./",
   "./index.html",
