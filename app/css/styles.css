@@ -294,6 +294,8 @@ button { cursor: pointer; border: 0; background: none; touch-action: manipulatio
 .modal p { margin: 0 0 6px; color: var(--muted); }
 @media (min-width: 560px) { .modal-backdrop { align-items: center; } .modal { border-radius: 28px; } }
 
+.preview-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 70; text-align: center; padding: calc(var(--safe-top) + 6px) 12px 6px; background: var(--warning); color: #3A2A00; font-weight: 800; font-size: 13px; }
+body:has(.preview-bar) .phone { padding-top: calc(var(--safe-top) + 46px); }
 .toast { position: fixed; left: 50%; bottom: calc(var(--safe-bottom) + 28px); transform: translate(-50%, 30px); background: #fff; color: #1C1442; padding: 12px 18px; border-radius: 14px; font-weight: 800; font-size: 14px; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 60; max-width: 90vw; text-align: center; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 

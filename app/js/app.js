@@ -1,8 +1,20 @@
 // Uzquiz — asosiy ilova (UI va o'yin oqimi).
-import { ROUNDS } from "./questions.js";
+import { ROUNDS as LIVE_ROUNDS } from "./questions.js";
 import * as L from "./logic.js";
 
-const KEYS = { game: "uzquiz.game", records: "uzquiz.records", settings: "uzquiz.settings", name: "uzquiz.name" };
+// Ko'rib chiqish rejimi (?preview=1): savollar muharriridagi qoralama bilan o'ynash.
+// Bu rejimda natijalar asosiy o'yindan alohida saqlanadi.
+const PREVIEW = new URLSearchParams(location.search).has("preview");
+function loadPreviewRounds() {
+  try {
+    const d = JSON.parse(localStorage.getItem("uzquiz.admin.draft") || "null");
+    if (d && Array.isArray(d.rounds) && !L.validateRounds(d.rounds).errors.length) return d.rounds;
+  } catch { /* qoralama buzilgan */ }
+  return null;
+}
+const ROUNDS = (PREVIEW && loadPreviewRounds()) || LIVE_ROUNDS;
+const SFX = PREVIEW ? ".preview" : "";
+const KEYS = { game: "uzquiz.game" + SFX, records: "uzquiz.records" + SFX, settings: "uzquiz.settings", name: "uzquiz.name" };
 const TOTAL_Q = L.totalQuestions(ROUNDS);
 const RING = 2 * Math.PI * 28;
 
@@ -816,4 +828,20 @@ if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
 // Testlash uchun ichki holatga kirish (faqat o'qish uchun)
 window.__uzquiz = { get game() { return game; }, get timer() { return timer; }, ROUNDS, L };
 
-showHome();
+if (PREVIEW) {
+  const bar = document.createElement("div");
+  bar.className = "preview-bar";
+  bar.setAttribute("role", "note");
+  bar.textContent = ROUNDS === LIVE_ROUNDS ? "Ko'rib chiqish: qoralama topilmadi — saytdagi savollar" : "👁️ Ko'rib chiqish rejimi — muharrirdagi qoralama savollar";
+  document.body.prepend(bar);
+  const r = Number(new URLSearchParams(location.search).get("r"));
+  if (Number.isInteger(r) && r > 0 && r < ROUNDS.length) {
+    // tanlangan raunddan boshlash
+    newGame("Sinov");
+    game.round = r;
+    save();
+    showIntro();
+  } else showHome();
+} else {
+  showHome();
+}

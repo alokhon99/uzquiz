@@ -177,6 +177,45 @@ tc("TC-61", "isNewRecord (BUG-06 regression)", () => {
   ok(!L.isNewRecord([{ score: 100 }, { score: 50 }], 80), "lower");
 });
 
+// ---- Question editor support (validateRounds / serializeRounds) ----
+const deep = (x) => JSON.parse(JSON.stringify(x));
+const msgs = (rs) => L.validateRounds(rs).errors.map((e) => e.msg).join(" | ");
+
+tc("TC-62", "live question bank passes the editor validator", () => {
+  const v = L.validateRounds(ROUNDS);
+  eq(v.errors, [], "errors");
+  eq(v.warnings, [], "warnings");
+});
+
+tc("TC-63", "validator catches broken edits", () => {
+  let r = deep(ROUNDS); r[1].questions[0].options[1] = r[1].questions[0].options[0];
+  ok(msgs(r).includes("takrorlanmasligi"), "duplicate options");
+  r = deep(ROUNDS); r[1].questions[2].options[3] = "  ";
+  ok(msgs(r).includes("Bo'sh javob varianti"), "empty option");
+  r = deep(ROUNDS); r[0].questions[4].image = "";
+  ok(msgs(r).includes("rasm kerak"), "round 1 picture");
+  r = deep(ROUNDS); r[2].questions[2].answer = "Fil";
+  ok(/zanjiri buzilgan.*«Z»/.test(msgs(r)), "chain break: " + msgs(r));
+  r = deep(ROUNDS); r[5].questions[6].answer = "Buxoro";
+  ok(msgs(r).includes("yashirin mavzuga"), "theme mismatch");
+  r = deep(ROUNDS); r[5].questions[0].text += " Samarqandda";
+  ok(L.validateRounds(r).warnings.some((w) => w.msg.includes("ko'rinib")), "theme leak warning");
+  r = deep(ROUNDS); r[3].timeLimit = 2;
+  ok(msgs(r).includes("Vaqt"), "time limit");
+  r = deep(ROUNDS); r[4].questions[0].text = "";
+  ok(msgs(r).includes("Savol matni bo'sh"), "empty text");
+  ok(msgs(ROUNDS.slice(0, 5)).includes("6 ta raund"), "round count");
+});
+
+tc("TC-64", "questions.js is in canonical editor format & round-trips", () => {
+  const file = readFileSync(new URL("../app/js/questions.js", import.meta.url), "utf8");
+  ok(file === L.serializeRounds(ROUNDS), "questions.js differs from serializeRounds(ROUNDS)");
+  const json = file.slice(file.indexOf("export const ROUNDS = ") + "export const ROUNDS = ".length).trim().replace(/;$/, "");
+  eq(JSON.parse(json), L.cleanRounds(ROUNDS), "round trip");
+  const r = deep(ROUNDS); r[1].questions[0].fact = "   "; r[2].questions[0].alts = [];
+  ok(!("fact" in L.cleanRounds(r)[1].questions[0]) && !("alts" in L.cleanRounds(r)[2].questions[0]), "empty fields dropped");
+});
+
 const failed = results.filter((r) => !r.ok);
 for (const r of results) console.log(`${r.ok ? "PASS" : "FAIL"}  ${r.id}  ${r.name}${r.ok ? "" : "  → " + r.msg}`);
 console.log(`\n${results.length - failed.length}/${results.length} passed`);

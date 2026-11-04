@@ -94,3 +94,23 @@ BUG-10 → **Verified fixed / Closed**.
 ✅ Exit criterion met: an iteration finished with **no bugs found**. The MVP meets the acceptance criteria in `01-requirements.md` §8.
 
 Known limitations (not defects, outside the MVP's test reach): real-device haptics/audio and on-screen keyboard overlap on iOS/Android were not tested on physical hardware. Native Web Share sheet was only tested via its clipboard fallback.
+
+---
+
+## Release 1.1 — Question editor (admin.html) — 2026-11-04
+| Suite | Checks | Pass | Fail |
+|---|---|---|---|
+| Unit (`run-tests.mjs`, incl. TC-62…64: validator, canonical file format, round-trip) | 23 | 23 | 0 |
+| Editor E2E `admin-e2e.js` (edit, validation, draft restore, mocked GitHub publish, 401 error) | 25 | 25 | 0 |
+| Game regression E2E (home, full game, mixed, regression, timer off, records) | 72 | 72 | 0 |
+| Preview mode (draft questions shown, separate `.preview` storage, live game unaffected) | 3 | 3 | 0 |
+
+Bugs found and fixed during this release:
+| ID | Severity | Title | Fix |
+|---|---|---|---|
+| BUG-11 | Minor | Round tabs showed a "0" error badge for rounds with no errors (`display:grid` overrode `hidden`) | `.tab .badge[hidden]{display:none}` |
+| BUG-12 | Minor | "O'yinni ochish" link-button rendered underlined in link colour | `a.btn` resets decoration/colour |
+| BUG-13 | Minor | Editor textareas used the browser's monospace font | `textarea { font: inherit }` |
+
+Test defect: AD-02 expected 1 error after breaking the word chain; changing one answer correctly breaks two links (Q3 and Q4) → expectation updated to 2.
+Not tested: a real publish to GitHub (needs your token); the publish code was verified against a mocked GitHub API.
