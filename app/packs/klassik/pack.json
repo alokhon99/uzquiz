@@ -28,116 +28,148 @@
       "questions": [
         {
           "type": "text",
-          "text": "Bu qaysi milliy taom?",
+          "text": "Suratda qaysi nominaldagi pul ushlab turilibdi?",
           "media": {
             "type": "image",
-            "src": "media/qozon.svg",
-            "alt": "Olov ustidagi qora qozonda guruch, sariq va to'q sariq sabzi, ustida sarimsoq piyoz; yonida kapgir",
+            "src": "media/19cfeefc6356.webp",
+            "alt": "Sherdor matrasasi fonida kupyura ushlab turilibdi.",
             "rights": {
               "source": "Uzquiz jamoasi",
               "licence": "own",
               "holder": "Uzquiz"
             }
           },
-          "answer": "Osh",
+          "answer": "200 so'm",
           "alts": [
-            "Palov",
-            "Plov",
-            "Osh palov",
-            "Oshi palov"
+            "200 som",
+            "200",
+            "200som",
+            "200sm",
+            "ikki yuz som",
+            "ikki yuz so'm",
+            "2 yuz so'm"
           ],
           "keywords": [
-            "palov"
+            "200"
           ],
           "hint": "count",
-          "fact": "«Palov madaniyati va an'analari» 2016-yilda YUNESKOning nomoddiy madaniy meros ro'yxatiga kiritilgan."
-        },
-        {
-          "type": "text",
-          "text": "Bu bosh kiyim qanday ataladi?",
-          "media": {
-            "type": "image",
-            "src": "media/doppi.svg",
-            "alt": "Qora to'rt qirrali bosh kiyim, ustida oq qalampir shaklidagi naqshlar",
-            "rights": {
-              "source": "Uzquiz jamoasi",
-              "licence": "own",
-              "holder": "Uzquiz"
-            }
-          },
-          "answer": "Do'ppi",
-          "alts": [
-            "Chust do'ppi",
-            "Chust do'ppisi",
-            "Tyubeteyka"
-          ],
-          "keywords": [
-            "do'ppi"
-          ],
-          "hint": "letters",
-          "fact": "Qora fonda oq «qalampir» naqshli bu do'ppi Chust do'ppisi deb ataladi. Qalampir yovuz ko'zdan asraydi deb hisoblangan."
-        },
-        {
-          "type": "text",
-          "text": "O'zbekistonda «oq oltin» deb ataladigan bu o'simlik nima?",
-          "media": {
-            "type": "image",
-            "src": "media/paxta.svg",
-            "alt": "Oq momiq tolali chanoqlari ochilgan o'simlik shoxi, quyoshli dala",
-            "rights": {
-              "source": "Uzquiz jamoasi",
-              "licence": "own",
-              "holder": "Uzquiz"
-            }
-          },
-          "answer": "Paxta",
-          "alts": [
-            "G'o'za",
-            "Paxta o'simligi"
-          ],
-          "hint": "count",
-          "fact": "Paxta chanoqlari O'zbekiston Respublikasi Davlat gerbida bug'doy boshoqlari bilan birga tasvirlangan."
-        },
-        {
-          "type": "text",
-          "text": "Bu keng va kalta, oxiriga yetkazilmagan minora qaysi shaharda joylashgan?",
-          "media": {
-            "type": "image",
-            "src": "media/kalta-minor.svg",
-            "alt": "Ko'k va feruza koshinli yo'l-yo'l keng, past minora, atrofida qal'a devori",
-            "rights": {
-              "source": "Uzquiz jamoasi",
-              "licence": "own",
-              "holder": "Uzquiz"
-            }
-          },
+          "fact": "",
           "reveal": {
             "type": "image",
-            "src": "media/xiva-reveal.svg",
-            "alt": "Xiva, Ichan qal'a, Kalta Minor haqida ma'lumot kartasi",
+            "src": "media/7dfd7adecaa0.webp",
+            "alt": "-",
+            "rights": {
+              "source": "o'zimiz",
+              "licence": "own",
+              "holder": "-"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Qaysi jonzot tanasining bir qismi kattalashtirilgan ko'rinishda berildi?",
+          "media": {
+            "type": "image",
+            "src": "media/f3833b8c77b3.webp",
+            "alt": "Yashildan sariqqa o'zgaruvcha shakldagi tolalar",
             "rights": {
               "source": "Uzquiz jamoasi",
               "licence": "own",
               "holder": "Uzquiz"
             }
           },
-          "answer": "Xiva",
+          "answer": "Tovus",
+          "keywords": [
+            "tovus"
+          ],
+          "hint": "letters",
+          "fact": "-",
           "alts": [
-            "Khiva",
-            "Ichan qal'a"
+            "Tovus"
           ],
-          "partial": [
-            "Xorazm"
-          ],
-          "hint": "none",
-          "fact": "Kalta Minor 1851-yilda qurila boshlangan. Muhammad Aminxon vafotidan so'ng qurilish to'xtab qolgan."
+          "reveal": {
+            "type": "image",
+            "src": "media/8fb5c3a3f8db.webp",
+            "alt": "-",
+            "rights": {
+              "source": "-",
+              "licence": "own",
+              "holder": "-"
+            }
+          }
         },
         {
           "type": "text",
-          "text": "Yer ostiga qazilgan bu ulkan yoy qaysi olimning rasadxonasiga tegishli?",
+          "text": "Qaysi kiyim do'konining kirish qismi?",
           "media": {
             "type": "image",
-            "src": "media/sekstant.svg",
+            "src": "media/6d5da81c014e.webp",
+            "alt": "--",
+            "rights": {
+              "source": "Uzquiz jamoasi",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "answer": "U.S. Polo ",
+          "alts": [
+            "US Polo",
+            "U.S. Polo Assn",
+            "Polo"
+          ],
+          "hint": "letters",
+          "fact": "",
+          "keywords": [
+            "polo"
+          ],
+          "reveal": {
+            "type": "image",
+            "src": "media/fca6559118c3.webp",
+            "alt": "-",
+            "rights": {
+              "source": "-",
+              "licence": "own",
+              "holder": "-"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Karikaturadagi qor odam boshqa qor odamlarni nima bilan qo'rqitmoqda?",
+          "media": {
+            "type": "image",
+            "src": "media/ce8d88a586a7.webp",
+            "alt": "-",
+            "rights": {
+              "source": "Uzquiz jamoasi",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "answer": "Fen",
+          "alts": [
+            "Fen"
+          ],
+          "hint": "count",
+          "fact": "",
+          "exact": true,
+          "reveal": {
+            "type": "image",
+            "src": "media/36c294cda8d1.webp",
+            "alt": "-",
+            "rights": {
+              "source": "-",
+              "licence": "own",
+              "holder": "-"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "text": "Afrosiyob poyezdida raqamlar yonidagi nuqtalar kimlar uchun qo'yilgan?",
+          "media": {
+            "type": "image",
+            "src": "media/6c9136fa3e09.webp",
             "alt": "Tungi osmon ostida yerga chuqur kirib borgan ulkan darajali yoy, zinapoya va yulduzga yo'nalgan chiziq",
             "rights": {
               "source": "Uzquiz jamoasi",
@@ -145,78 +177,96 @@
               "holder": "Uzquiz"
             }
           },
-          "answer": "Ulug'bek",
+          "answer": "Ko'zi ojizlar",
           "alts": [
-            "Mirzo Ulug'bek",
-            "Ulugbek"
+            "Kozi ojiz",
+            "ko'zi ojiz",
+            "ko'rlar"
           ],
           "keywords": [
-            "ulug'bek"
-          ],
-          "partial": [
-            "Samarqand"
+            "ko'z"
           ],
           "hint": "letters",
-          "fact": "Ulug'bek rasadxonasi XV asrda Samarqandda qurilgan. «Ziji jadidi Ko'ragoniy» jadvalida 1018 ta yulduz o'rni ko'rsatilgan."
+          "fact": "",
+          "reveal": {
+            "type": "image",
+            "src": "media/a478efe15108.webp",
+            "alt": "-",
+            "rights": {
+              "source": "-",
+              "licence": "own",
+              "holder": "-"
+            }
+          }
         },
         {
           "type": "text",
-          "text": "Rasm qaysi olim va uning mashhur kashfiyotiga ishora qilmoqda? Olimning ismini yozing.",
+          "text": "Nimani oldini olish uchun Xitoyda yuk vagonlariga ortilgan ko'mir ustiga shunday yozuvlar yoziladi?",
           "media": {
             "type": "image",
-            "src": "media/olma.svg",
-            "alt": "Olma daraxti ostida parikli kishi kitob bilan o'tiribdi, uning tepasiga olma tushmoqda",
+            "src": "media/ab18ba439d69.webp",
+            "alt": "-",
             "rights": {
               "source": "Uzquiz jamoasi",
               "licence": "own",
               "holder": "Uzquiz"
             }
           },
-          "answer": "Nyuton",
+          "answer": "O'g'rilik",
           "alts": [
-            "Isaak Nyuton",
-            "Newton",
-            "Isaac Newton",
-            "Nyuton Isaak"
+            "ogrilik",
+            "o'grilik",
+            "ogri",
+            "o'g'ri"
           ],
           "keywords": [
-            "nyuton",
-            "newton"
-          ],
-          "partial": [
-            "Tortishish qonuni",
-            "Gravitatsiya",
-            "Tortishish"
+            "o'g'ri"
           ],
           "hint": "count",
-          "fact": "Rivoyatga ko'ra, daraxtdan tushgan olma Isaak Nyutonni butun olam tortishish qonuni haqida o'ylashga undagan."
+          "fact": "-",
+          "reveal": {
+            "type": "image",
+            "src": "media/025cff6fb73b.webp",
+            "alt": "-",
+            "rights": {
+              "source": "-",
+              "licence": "licensed",
+              "holder": "-"
+            }
+          }
         },
         {
           "type": "text",
-          "text": "Uchta madrasa bir-biriga qarab turgan bu mashhur maydon qanday ataladi?",
+          "text": "Pakkining bunday uchli qismidan nima maqsadda foydalaniladi?",
           "media": {
             "type": "image",
-            "src": "media/uch-madrasa.svg",
-            "alt": "Uchta baland peshtoqli, minorali va feruza gumbazli madrasa bir maydonda",
+            "src": "media/5c7f0bcdf8b6.webp",
+            "alt": "-",
             "rights": {
               "source": "Uzquiz jamoasi",
               "licence": "own",
               "holder": "Uzquiz"
             }
           },
-          "answer": "Registon",
+          "answer": "Oynani sindirish",
           "alts": [
-            "Registon maydoni",
-            "Registan"
+            "oyna sindirish"
           ],
           "keywords": [
-            "registon"
-          ],
-          "partial": [
-            "Samarqand"
+            "oyna sindirish"
           ],
           "hint": "letters",
-          "fact": "Registon maydonini Ulug'bek (XV asr), Sherdor va Tillakori (XVII asr) madrasalari o'rab turadi."
+          "fact": "-",
+          "reveal": {
+            "type": "image",
+            "src": "media/9ef6339f9289.webp",
+            "alt": "-",
+            "rights": {
+              "source": "-",
+              "licence": "own",
+              "holder": "-"
+            }
+          }
         }
       ]
     },
