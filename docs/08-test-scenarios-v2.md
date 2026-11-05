@@ -104,3 +104,20 @@ Requirements: `09-requirements-2.1-typed-answers.md`.
 | V-82…84 | TA-07 | Wrong answer / skip / timeout | Claim button only for the wrong typed answer |
 | V-85 | — | Round result | 4 / 7 correct |
 | AD-20…24 | TA-11/12 | Editor: rules panel, live test box, partial = answer error, hint/exact saved, discard | As stated |
+
+## 2.2 — Cyrillic script
+Requirements: `10-requirements-2.2-cyrillic.md`.
+
+| ID | Req | Scenario | Expected |
+|---|---|---|---|
+| U-40 | CY-04 | Uzbek transliteration cases (o', g', sh, yo, ye/е, e/э, ъ, capitals, numbers) | Exact Cyrillic spelling |
+| U-41 | CY-05 | H₂O, CO₂, NaCl, 3D, Uzquiz, Newton, iPhone, links | Unchanged |
+| U-42 | CY-06 | Cyrillic → Latin; round trip of every pack text | Matches original |
+| U-43 | CY-07/08 | Cyrillic typed answers; Cyrillic letter boxes; normalize | As stated |
+| C-01/02 | CY-01..03 | Switch to Кирилл on the catalogue | No Latin left except Uzquiz; title and placeholder in Cyrillic; lang = uz-Cyrl |
+| C-03 | CY-10 | Search "ритм" | Only Tovushlar va ritm |
+| C-04..08 | CY-03/07/08 | Rasminka in Cyrillic | Intro "Расминка"; "2 та ҳарф" for Ош; «Д» + 5 boxes for Дўппи; Latin answer accepted; boxes show ДЎППИ |
+| C-09..11 | CY-08 | Word chain in Cyrillic | «Т» hint, 7 boxes, "Тошкент" accepted; next hint «Т», 6 boxes |
+| C-12 | CY-03 | Exit dialog | "Ўйиндан чиқасизми?" |
+| C-13 | CY-02 | Toggle back to Latin | No Cyrillic left; setting saved |
+| — | CY-03/09 | Full Klassik game in Cyrillic, scanning every screen | Only formulas and "3D" stay Latin; keys А Б В Г |

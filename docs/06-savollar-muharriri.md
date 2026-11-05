@@ -66,6 +66,12 @@ Yuqoridagi yorliqlar: **📦 Paket**, raundlar (**1. …**, **2. …**) va **＋
 - **Ha / Yo'q:** to'g'ri javobni belgilang.
 - **Yozma:** to'g'ri javob va vergul bilan ajratilgan muqobil javoblar (masalan, `Navoiy` asosiy, `Alisher Navoiy` muqobil).
 
+### 🔤 Lotin va kirill yozuvi
+Paketni **lotin yoki kirill** yozuvida yozishingiz mumkin. O'yin har bir o'yinchiga matnni uning tanlagan yozuvida avtomatik ko'rsatadi. Bitta paketni ikki marta yozish shart emas.
+- Kimyoviy formulalar (H₂O), «Uzquiz» nomi, inglizcha yozuvlar («Newton») va havolalar o'zgarmaydi.
+- **Rasm ichiga yozuv yozmang.** U o'girilmaydi. Matnni savol yoki fakt maydoniga yozing.
+- Bir paket ichida bitta yozuvdan foydalaning (aralash yozilsa ham ishlaydi, lekin tahrirlash qiyinlashadi).
+
 ### 🧑‍⚖️ Javobni tekshirish qoidalari (yozma savollar)
 Qog'ozda javob yozib, hakam tekshiradigan savollar uchun. Ilova javobni hakam kabi yumshoq tekshiradi. Katta-kichik harf, nuqta, tutuq belgisi, kirill/lotin yozuvi va x/h farqi o'z-o'zidan e'tiborga olinmaydi. 5 harfdan uzun javoblarda 1–2 ta imlo xatosi kechiriladi.
 

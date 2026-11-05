@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as L from "../app/js/logic.js";
 import * as P from "../app/js/pack.js";
+import * as T from "../app/js/script.js";
 import { ROUNDS as V1 } from "../tools/legacy/questions-v1.js";
 
 const APP = fileURLToPath(new URL("../app/", import.meta.url));
@@ -127,6 +128,38 @@ tc("U-38", "validator: bad lists, unknown hint, partial that is really correct, 
 tc("U-39", "answerWords splits words and strips punctuation for letter boxes", () => {
   eq(L.answerWords("U.S. Polo"), [["u", "s"], ["p", "o", "l", "o"]]);
   eq(L.answerWords("Do'ppi"), [["d", "o'", "p", "p", "i"]]);
+});
+
+/* ---------- B3. 2.2 Latin ↔ Cyrillic script ---------- */
+tc("U-40", "Latin → Cyrillic follows Uzbek rules (o', g', sh, ch, yo/yu/ya/ye, e/э, tutuq → ъ)", () => {
+  const cases = {
+    "O'tkazib yuborish": "Ўтказиб юбориш", "Yo'q, noto'g'ri": "Йўқ, нотўғри", "Yer": "Ер", "e'lon": "эълон", "aeroport": "аэропорт",
+    "ma'lumot": "маълумот", "Qur'on": "Қуръон", "G'afur G'ulom": "Ғафур Ғулом", "Shohi Zinda": "Шоҳи Зинда", "Yoqub": "Ёқуб",
+    "SHASHMAQOM": "ШАШМАҚОМ", "1991-yil": "1991-йил", "Javob «D» harfi": "Жавоб «Д» ҳарфи", "Leonardo DiKaprio": "Леонардо ДиКаприо",
+  };
+  for (const [lat, cyr] of Object.entries(cases)) eq(T.toCyrillic(lat), cyr, lat);
+});
+tc("U-41", "words that must stay Latin: formulas, brands, English spellings", () => {
+  ["H₂O", "CO₂", "NaCl", "3D", "Uzquiz", "Newton", "iPhone'dagi", "https://alokhon99.github.io"].forEach((w) => eq(T.toCyrillic(w), w, w));
+});
+tc("U-42", "Cyrillic → Latin (for packs written in Cyrillic) and round trip of all UI-like pack text", () => {
+  eq(T.cyrToLat("Қайси кийим дўконнинг кириш қисми?"), "Qaysi kiyim do'konning kirish qismi?");
+  eq(T.cyrToLat("Ер, Поэзия, Шўрва, ЮНЕСКО"), "Yer, Poeziya, Sho'rva, YUNESKO");
+  for (const [id, p] of Object.entries(packs)) {
+    for (const r of p.rounds) for (const q of r.questions) for (const t of [r.title, r.description, q.text, q.fact, ...(q.options || [])].filter(Boolean)) {
+      const back = T.cyrToLat(T.toCyrillic(t)).replace(/[‘’ʻʼ`]/g, "'");
+      eq(back.toLowerCase(), t.replace(/[‘’ʻʼ`]/g, "'").toLowerCase(), `${id}: ${t}`);
+    }
+  }
+});
+tc("U-43", "answers and letter boxes work in both scripts", () => {
+  const ch = klassik.rounds[2];
+  ok(L.isTextCorrect("Тошкент", ch.questions[0]) && L.isTextCorrect("Ер", { answer: "Yer" }), "Cyrillic typed answer");
+  eq(L.answerWords("Do'ppi", "cyr"), [["д", "ў", "п", "п", "и"]]);
+  eq(L.answerWords("Yer", "cyr"), [["е", "р"]]);
+  eq(L.answerWords("Osh", "cyr").flat().length, L.answerWords("Osh").flat().length);
+  eq(T.convert("Salom", "cyr"), "Салом"); eq(T.convert("Салом", "lat"), "Salom"); eq(T.convert("Salom", "lat"), "Salom");
+  eq(L.normalize("Ўзбекистон"), "o'zbekiston");
 });
 
 /* ---------- B. Answer & scoring logic (carried over from 1.x) ---------- */

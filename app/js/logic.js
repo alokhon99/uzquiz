@@ -1,10 +1,11 @@
 // Uzquiz — sof (UI'siz) o'yin mantig'i. Node.js testlarida ham ishlatiladi.
+import { cyrToLat, toCyrillic } from "./script.js";
 
 const APOSTROPHES = /[‘’ʻʼ`´′']/g;
 
-/** Javobni solishtirish uchun normallashtirish. */
+/** Javobni solishtirish uchun normallashtirish (kirill matn avval lotinga o'giriladi). */
 export function normalize(str) {
-  return String(str ?? "")
+  return cyrToLat(String(str ?? ""))
     .replace(APOSTROPHES, "'")
     .toLocaleLowerCase("uz")
     .replace(/\s+/g, " ")
@@ -18,16 +19,9 @@ export function isTextCorrect(input, question) {
 
 /* ---------- 2.1: yumshoq (inson kabi) javob tekshiruvi ---------- */
 
-// O'zbek (va rus) kirill harflari → lotin.
-const CYR = {
-  а: "a", б: "b", в: "v", г: "g", ғ: "g'", д: "d", е: "e", ё: "yo", ж: "j", з: "z", и: "i", й: "y", к: "k", қ: "q",
-  л: "l", м: "m", н: "n", о: "o", ў: "o'", п: "p", р: "r", с: "s", т: "t", у: "u", ф: "f", х: "x", ҳ: "h", ц: "ts",
-  ч: "ch", ш: "sh", щ: "sh", ъ: "'", ь: "", ы: "i", э: "e", ю: "yu", я: "ya",
-};
-
-/** Kirill yozuvini lotinga o'giradi (lotin matn o'zgarmaydi). */
+/** Kirill yozuvini lotinga o'giradi va kichik harflarga keltiradi (lotin matn o'zgarmaydi). */
 export function toLatin(str) {
-  return String(str ?? "").toLocaleLowerCase("uz").replace(/[а-яёўқғҳ]/g, (c) => CYR[c] ?? c);
+  return cyrToLat(String(str ?? "")).toLocaleLowerCase("uz");
 }
 
 /** Solishtirish kaliti: yozuv, katta-kichik harf, tutuq belgisi, nuqta va boshqa belgilar ahamiyatsiz. */
@@ -105,7 +99,13 @@ export function checkText(input, q) {
 }
 
 /** Javobni so'zlarga va o'zbek harflariga ajratish (harf kataklari uchun). */
-export function answerWords(answer) {
+export function answerWords(answer, script = "lat") {
+  if (script === "cyr") {
+    // Kirillda har bir belgi — bitta harf (ш, ч, ў, ғ, ё, ю, я ham).
+    return toCyrillic(normalize(answer)).split(" ")
+      .map((w) => [...w.replace(/[^\p{L}\p{N}]/gu, "")])
+      .filter((w) => w.length);
+  }
   return normalize(answer)
     .split(" ")
     .map((w) => uzLetters(w.replace(/[^\p{L}\p{N}']/gu, "").replace(/^'+|'+$/g, "")))

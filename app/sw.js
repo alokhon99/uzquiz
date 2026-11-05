@@ -1,5 +1,5 @@
 // Uzquiz service worker — oflayn rejim uchun keshlash.
-const CACHE = "uzquiz-v5";
+const CACHE = "uzquiz-v6";
 const SHELL = [
   "./",
   "./index.html",
@@ -8,6 +8,7 @@ const SHELL = [
   "./js/logic.js",
   "./js/pack.js",
   "./js/mediastore.js",
+  "./js/script.js",
   "./icon.svg",
   "./manifest.webmanifest",
   "./packs/index.json",

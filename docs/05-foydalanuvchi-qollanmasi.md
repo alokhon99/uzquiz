@@ -18,10 +18,21 @@
 
 ---
 
+## 1a. Yozuv: lotin yoki kirill
+
+O'yinni **lotin** yoki **kirill** yozuvida o'ynash mumkin:
+- bosh sahifaning yuqori qismidagi **Ўз** tugmasini bosing (kirillga o'tish). Lotinga qaytish uchun **O'z** tugmasini bosing;
+- yoki **⚙️ Sozlamalar → Yozuv** bo'limida **Lotin** yoki **Кирилл** ni tanlang.
+
+Barcha ekranlar, savollar, javoblar va paketlar tanlangan yozuvda ko'rsatiladi. Javobni ikkala yozuvda ham yozishingiz mumkin («Тошкент» ham, «Toshkent» ham to'g'ri). Tanlov telefoningizda saqlanadi.
+
+> ℹ️ Rasmlar ichidagi yozuvlar rasmning bir qismi bo'lgani uchun o'zgarmaydi.
+
 ## 2. Bosh sahifa — paketlar katalogi
 
 | Element | Vazifasi |
 |---|---|
+| Ўз / O'z (yuqorida) | Kirill yoki lotin yozuviga o'tish |
 | 🏆 📖 ⚙️ (yuqorida) | Rekordlar, «Qanday o'ynaladi?» va Sozlamalar |
 | **▶ Davom ettirish** qatori | Tugallanmagan o'yinlaringiz: paket, raund va ochko |
 | 🔍 **Paket qidirish** | Paket nomi yoki tavsifidagi so'z bo'yicha qidirish |
@@ -157,6 +168,7 @@ Natijangiz shu paketdagi eng yaxshi natijadan yuqori bo'lsa, **«🏆 Yangi reko
 
 - **🏆 Rekordlar:** eng yaxshi natijalar. Paket nomini bosib, faqat shu paket natijalarini ko'rish mumkin. **«Rekordlarni tozalash»** tugmasi hammasini o'chiradi.
 - **⚙️ Sozlamalar:**
+  - **Yozuv** — lotin yoki kirill;
   - **Ovoz** — o'yin tovushlarini yoqish yoki o'chirish;
   - **Tebranish** — javob berganda tebranish;
   - **Taymer** — o'chirilsa, vaqt cheklanmaydi va bonus berilmaydi (keyingi yangi o'yindan boshlab).

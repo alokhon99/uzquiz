@@ -424,6 +424,52 @@ const suites = {
     await home();
   },
 
+  // 2.2: kirill yozuvi
+  async cyrillic() {
+    localStorage.removeItem("uzquiz.game.klassik");
+    await home();
+    if (document.documentElement.lang !== "uz-Cyrl") act("toggleScript");
+    await until(() => $("#pack-list") && document.documentElement.lang === "uz-Cyrl");
+    await wait(100);
+    const latinLeft = (t) => t.replace(/Uzquiz|O'z/g, "").match(/[A-Za-z]+/g) || [];
+    check("C-01", !latinLeft(txt()).length && /[Ѐ-ӿ]/.test(txt()), latinLeft(txt()).join(" "));
+    check("C-02", document.title === "Uzquiz — Ўзбекча викторина" && $("#search").placeholder.includes("Пакет қидириш"), document.title);
+    const s = $("#search"); s.value = "ритм"; s.dispatchEvent(new Event("input", { bubbles: true }));
+    await until(() => $$("#pack-list .pack-card").length === 1);
+    check("C-03", $$("#pack-list .pack-card").length === 1 && $('#pack-list [data-id="tovushlar"]'), "Cyrillic search");
+    s.value = ""; s.dispatchEvent(new Event("input", { bubbles: true }));
+    await until(() => $$("#pack-list .pack-card").length === 3);
+    await startPack("klassik", "Дилноза");
+    check("C-04", has("Расминка") && has("Раунд 1 / 6") && !latinLeft(txt()).length, latinLeft(txt()).join(" "));
+    act("beginRound");
+    await until(() => $("#text-form"));
+    check("C-05", $(".hint-text").innerText.includes("2 та ҳарф") && $("#answer").placeholder.startsWith("Жавобни"), $(".hint-text").innerText);
+    $("#answer").value = "Ош"; $("#text-form").requestSubmit(); await wait(20);
+    check("C-06", U().game.results[0][0].c && has("Тўғри"), "Cyrillic answer");
+    act("next"); await until(() => $("#text-form"));
+    check("C-07", $(".hint-text").innerText.includes("«Д»") && $$(".letters i").length === 5, $(".hint-text").innerText + " " + $$(".letters i").length);
+    $("#answer").value = "doppi"; $("#text-form").requestSubmit();
+    check("C-08", U().game.results[0][1].c && $$(".letters i").map((b) => b.textContent).join("") === "ДЎППИ", $$(".letters i").map((b) => b.textContent).join(""));
+    act("next");
+    for (let i = 2; i < 7; i++) { await until(() => $("#text-form")); act("skip"); act("next"); }
+    act("nextRound"); await playRound(true); act("nextRound"); act("beginRound");
+    await until(() => $("#text-form"));
+    check("C-09", $(".hint-text").innerText.includes("«Т»") && $(".hint-text").innerText.includes("7 та ҳарф"), $(".hint-text").innerText);
+    $("#answer").value = "Тошкент"; $("#text-form").requestSubmit();
+    check("C-10", U().game.results[2][0].c, "chain Cyrillic");
+    act("next"); await until(() => $("#text-form"));
+    check("C-11", $(".hint-text").innerText.includes("«Т»") && $$(".letters i").length === 6, $(".hint-text").innerText);
+    act("exit"); await wait(20);
+    check("C-12", $(".modal") && /Ўйиндан чиқасизми/.test($(".modal").innerText), $(".modal") && $(".modal").innerText);
+    click('[data-modal-act="1"]');
+    localStorage.removeItem("uzquiz.game.klassik");
+    await home();
+    act("toggleScript");
+    await until(() => document.documentElement.lang === "uz");
+    await wait(100);
+    check("C-13", !/[Ѐ-ӿ]/.test(txt().replace("Ўз", "")) && has("Savollar paketlari") && JSON.parse(localStorage.getItem("uzquiz.settings")).script === "lat", txt().slice(0, 120));
+  },
+
   async small() {
     await home();
     check("V-60a", document.documentElement.scrollWidth <= innerWidth && $$("#pack-list .pack-card")[0].getBoundingClientRect().bottom <= innerHeight, "catalogue on small screen");

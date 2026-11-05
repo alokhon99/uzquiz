@@ -213,3 +213,31 @@ Also checked by eye at 375 × 812 and 320 × 568: picture + input + buttons fit,
 ✅ Exit criterion met: no open bugs.
 
 Known, by design: typo tolerance is 0 for answers of 4 letters or fewer, so "Xivva" for *Xiva* is rejected. The player can overrule it with "Men to'g'ri topgandim".
+
+
+---
+
+# Release 2.2 — Cyrillic script
+
+## Iteration 1
+| Suite | Checks | Pass | Fail |
+|---|---|---|---|
+| Unit / content (incl. U-40…U-43) | 31 | 30 | 1 |
+| Game E2E: cyrillic | 14 | 11 | 3 |
+| Full Klassik game in Cyrillic, every screen scanned | — | — | 1 finding |
+
+| ID | Severity | Title | Fix |
+|---|---|---|---|
+| BUG-20 | Minor | In Cyrillic mode the answer keys showed А Б **C** Д (C has no Uzbek equivalent, so it stayed Latin) | Keys are А Б В Г Д Е in Cyrillic mode and excluded from conversion |
+
+Not app bugs:
+- U-42: the round trip of the mixed-case word "YuNESKO" came back as "YUNESKO". Cyrillic display is correct (ЮНЕСКО); the check now ignores case.
+- C-06, C-12: the test read the screen in the same instant as the click, before conversion ran. Conversion runs before the browser paints, so players never see Latin. The tests now wait one tick.
+- C-13: the test counted the intentional "Ўз" toggle label.
+
+## Iteration 2 — full regression
+Unit 31/31; game suites catalogue, rasminka, klassikFull, klassikRegress, timerOff, media, audio, mediaFail, back, corrupt1, cyrillic all pass; editor suites list, create, edit, rules pass. Full Cyrillic game: only H₂O, CO₂, O₂, NaCl and "3D" stay Latin, as intended.
+
+BUG-20 → **Verified fixed / Closed**. ✅ No open bugs.
+
+Known limitation: text drawn inside images (the Xiva reveal card) stays as drawn.

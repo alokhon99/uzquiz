@@ -2,6 +2,7 @@
 import * as L from "./logic.js";
 import * as P from "./pack.js";
 import { mediaStore } from "./mediastore.js";
+import * as T from "./script.js";
 
 /* ---------- Rejim ---------- */
 // Ko'rib chiqish (?preview=<paketId>&r=<raund>): muharrirdagi qoralama paket bilan o'ynash.
@@ -17,6 +18,7 @@ const KEYS = {
 };
 const RING = 2 * Math.PI * 28;
 const LETTERS = "ABCDEF";
+const LETTERS_CYR = "АБВГДЕ";
 const MEDIA_ICON = { image: "🖼️", audio: "🎵", video: "🎬" };
 const CAT = Object.fromEntries(P.CATEGORIES.map((c) => [c.id, c]));
 
@@ -28,10 +30,12 @@ const store = {
   keys() { try { return Object.keys(localStorage); } catch { return []; } },
 };
 function loadSettings() {
-  const def = { sound: true, vibration: true, timer: true };
+  const def = { sound: true, vibration: true, timer: true, script: "lat" };
   const s = store.get(KEYS.settings, def);
   if (!s || typeof s !== "object") return def;
-  return Object.fromEntries(Object.keys(def).map((k) => [k, typeof s[k] === "boolean" ? s[k] : def[k]]));
+  const out = Object.fromEntries(Object.keys(def).map((k) => [k, typeof s[k] === typeof def[k] ? s[k] : def[k]]));
+  if (!["lat", "cyr"].includes(out.script)) out.script = "lat";
+  return out;
 }
 function loadRecords() {
   const r = store.get(KEYS.records, []);
@@ -74,6 +78,17 @@ const blobUrls = new Map();
 
 const app = document.getElementById("app");
 const modalRoot = document.getElementById("modal-root");
+
+/* ---------- Yozuv: lotin / kirill (2.2) ---------- */
+const SCRIPT = () => settings.script;
+const tr = (text) => T.convert(text, SCRIPT());
+const TITLE = "Uzquiz — O'zbekcha viktorina";
+function applyScriptMeta() {
+  document.documentElement.lang = SCRIPT() === "cyr" ? "uz-Cyrl" : "uz";
+  document.title = tr(TITLE);
+}
+const scriptWatch = T.watchScript(document.body, SCRIPT);
+applyScriptMeta();
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const R = () => pack.rounds[game.round];
 const Q = () => R().questions[game.q];
@@ -387,6 +402,9 @@ function homeHeader() {
     <div class="cat-head">
       <div class="logo-mini" aria-hidden="true">Uz</div>
       <div class="ch-title"><h1>Uzquiz</h1><small>Savollar paketlari</small></div>
+      ${SCRIPT() === "cyr"
+        ? `<button class="icon-btn script-btn" data-act="toggleScript" data-keep aria-label="Lotin yozuviga o'tish">O'z</button>`
+        : `<button class="icon-btn script-btn" data-act="toggleScript" data-keep aria-label="Кирилл ёзувига ўтиш">Ўз</button>`}
       <button class="icon-btn" data-act="records" aria-label="Rekordlar">🏆</button>
       <button class="icon-btn" data-act="howto" aria-label="Qanday o'ynaladi?">📖</button>
       <button class="icon-btn" data-act="settings" aria-label="Sozlamalar">⚙️</button>
@@ -582,7 +600,7 @@ function showQuestion() {
   if (q.type === "choice") {
     const order = game.orders[game.round][game.q];
     body = `<div class="options" id="options" role="group" aria-label="Javob variantlari">
-      ${order.map((oi, i) => `<button class="option" data-opt="${oi}"><span class="key">${LETTERS[i]}</span><span>${esc(q.options[oi])}</span></button>`).join("")}
+      ${order.map((oi, i) => `<button class="option" data-opt="${oi}"><span class="key" data-keep>${(SCRIPT() === "cyr" ? LETTERS_CYR : LETTERS)[i]}</span><span>${esc(q.options[oi])}</span></button>`).join("")}
     </div>`;
   } else if (q.type === "truefalse") {
     body = `<div class="options tf" id="options" role="group" aria-label="Ha yoki yo'q">
@@ -592,8 +610,9 @@ function showQuestion() {
   } else {
     // Ishora: letters — birinchi harf + kataklar, count — faqat kataklar, none — ishorasiz (2.1).
     const hintMode = r.kind === "chain" ? "letters" : q.hint || "letters";
-    const letter = r.kind === "chain" ? L.chainHintLetter(r, game.q) : L.firstLetter(q.answer);
-    const words = L.answerWords(q.answer);
+    const words = L.answerWords(q.answer, SCRIPT());
+    // Kirillda birinchi harf to'g'ridan-to'g'ri javobdan olinadi (zanjirda u oldingi javobning oxirgi harfiga teng).
+    const letter = SCRIPT() === "cyr" ? words[0]?.[0] || "" : r.kind === "chain" ? L.chainHintLetter(r, game.q) : L.firstLetter(q.answer);
     const total = words.reduce((s, w) => s + w.length, 0);
     const size = `${total} ta harf${words.length > 1 ? ` · ${words.length} so'z` : ""}`;
     const boxes = words.map((w, wi) => w.map((l, li) => {
@@ -765,7 +784,7 @@ function finishAnswer(correct, reason, extra = {}) {
     document.querySelectorAll("#text-form button").forEach((b) => (b.disabled = true));
     if (showCorrect || correct) {
       const boxes = document.querySelectorAll(".letters i:not(.gap)");
-      L.answerWords(q.answer).flat().forEach((l, i) => { if (boxes[i]) { boxes[i].textContent = L.capLetter(l); boxes[i].classList.add(correct ? "ok" : partial ? "part" : "bad"); } });
+      L.answerWords(q.answer, SCRIPT()).flat().forEach((l, i) => { if (boxes[i]) { boxes[i].textContent = L.capLetter(l); boxes[i].classList.add(correct ? "ok" : partial ? "part" : "bad"); } });
     }
   }
   document.getElementById("progress").style.width = `${((game.q + 1) / r.questions.length) * 100}%`;
@@ -964,13 +983,21 @@ function showSettings() {
   render(`
     <div class="topbar"><button class="icon-btn" data-act="home" aria-label="Orqaga">←</button><h2>Sozlamalar</h2></div>
     <div class="list">
+      <div class="card setting">
+        <span style="font-size:24px" aria-hidden="true">🔤</span>
+        <span class="txt"><b>Yozuv</b><small>Lotin yoki kirill alifbosi</small></span>
+        <span class="seg" role="radiogroup" aria-label="Yozuv" data-keep>
+          <button class="seg-btn ${SCRIPT() === "lat" ? "on" : ""}" role="radio" aria-checked="${SCRIPT() === "lat"}" data-act="script" data-v="lat">Lotin</button>
+          <button class="seg-btn ${SCRIPT() === "cyr" ? "on" : ""}" role="radio" aria-checked="${SCRIPT() === "cyr"}" data-act="script" data-v="cyr">Кирилл</button>
+        </span>
+      </div>
       ${row("sound", "Ovoz", "Javob va taymer ovozlari", "🔊")}
       ${row("vibration", "Tebranish", "Javob berganda telefon tebranadi", "📳")}
       ${row("timer", "Taymer", "O'chirilsa — vaqt cheklanmaydi, bonus berilmaydi", "⏱️")}
     </div>
     <p class="muted center" style="font-size:13px">Taymer sozlamasi keyingi yangi o'yindan boshlab qo'llaniladi.</p>
     <div class="spacer"></div>
-    <p class="muted center" style="font-size:12px">Uzquiz 2.0-α · Barcha ma'lumotlar faqat qurilmangizda saqlanadi</p>
+    <p class="muted center" style="font-size:12px">Uzquiz 2.2 · Barcha ma'lumotlar faqat qurilmangizda saqlanadi</p>
   `);
 }
 
@@ -999,6 +1026,7 @@ function confetti() {
 /* ---------- Ulashish ---------- */
 const packLink = (id) => `${location.origin}${location.pathname}#/pack/${id}`;
 async function shareText(text, url) {
+  text = tr(text);
   try { if (navigator.share) { await navigator.share({ title: "Uzquiz", text, url }); return; } }
   catch (e) { if (e && e.name === "AbortError") return; }
   try { await navigator.clipboard.writeText(`${text} ${url}`); toast("Havola nusxalandi 📋"); }
@@ -1032,6 +1060,20 @@ const actions = {
   beginRound() { showQuestion(); },
   next() { nextQuestion(); },
   claim() { claimCorrect(); },
+  toggleScript() {
+    settings.script = settings.script === "cyr" ? "lat" : "cyr";
+    store.set(KEYS.settings, settings);
+    applyScriptMeta();
+    showHome();
+  },
+  script(el) {
+    if (settings.script === el.dataset.v) return;
+    settings.script = el.dataset.v;
+    store.set(KEYS.settings, settings);
+    applyScriptMeta();
+    showSettings();
+    toast(el.dataset.v === "cyr" ? "Кирилл ёзуви ёқилди" : "Lotin yozuvi yoqildi");
+  },
   skip() { if (!answered && !modalOpen()) finishAnswer(false, "skip"); },
   mediaSkip() { if (!answered) finishAnswer(false, "mediaFail"); },
   mplay(el) {
