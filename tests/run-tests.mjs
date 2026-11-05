@@ -56,12 +56,20 @@ tc("U-04", "no orphan media files (every file in media/ is used)", () => {
     ok(!orphans.length, `${id}: unused ${orphans.join(", ")}`);
   }
 });
-tc("U-05", "Klassik pack is a faithful migration of the v1 question bank", () => {
-  eq(klassik, P.migrateV1(V1), "klassik != migrateV1(v1)");
+tc("U-05", "Klassik rounds 2–6 are a faithful migration of the v1 question bank", () => {
+  const v1 = P.migrateV1(V1);
+  eq(klassik.rounds.slice(1), v1.rounds.slice(1), "rounds 2–6 != migrateV1(v1)");
   eq(klassik.rounds.map((r) => r.questions.length), [7, 7, 7, 7, 7, 7]);
   eq(klassik.rounds.map((r) => r.kind), ["standard", "standard", "chain", "standard", "standard", "theme"]);
-  eq(klassik.rounds.map((r) => r.timeLimit), [20, 30, 45, 30, 30, 30]);
-  ok(klassik.rounds[0].questions.every((q) => q.media), "round 1 pictures");
+  eq(klassik.rounds.map((r) => r.timeLimit), [45, 30, 45, 30, 30, 30]);
+});
+tc("U-34", "Rasminka (2.1): 7 picture riddles with typed answers", () => {
+  const r = klassik.rounds[0];
+  eq(r.title, "Rasminka");
+  ok(r.questions.every((q) => q.type === "text" && q.media && q.media.type === "image"), "all text + image");
+  ok(new Set(r.questions.map((q) => q.media.src)).size === 7, "7 distinct pictures");
+  ok(r.questions.every((q) => L.isTextCorrect(q.answer, q)), "own answer accepted");
+  ok(r.questions.every((q) => (q.partial || []).every((x) => L.checkText(x, q).verdict === "partial")), "partials give half");
 });
 tc("U-06", "Klassik word chain and hidden theme", () => {
   const ch = klassik.rounds[2];
@@ -80,6 +88,45 @@ tc("U-08", "every file media has alt text (image/video) and a rights record", ()
       if (m.type !== "audio") ok(m.alt, `${id}: alt missing for ${m.src}`);
     }
   }
+});
+
+/* ---------- B2. 2.1 lenient matching ---------- */
+tc("U-35", "Cyrillic/Latin, punctuation and x/h are ignored", () => {
+  const q = { answer: "U.S. Polo Assn", alts: ["US Polo"], keywords: ["polo"] };
+  ["us polo", "U.S Polo.", "Ю.С. Поло", "Polo", "U.S. POLO ASSN"].forEach((v) => eq(L.checkText(v, q).verdict, "ok", v));
+  ["Хива", "Khiva", "Hiva", "xiva"].forEach((v) => eq(L.checkText(v, { answer: "Xiva" }).verdict, "ok", v));
+  eq(L.checkText("Улуғбек", { answer: "Ulug'bek" }).verdict, "ok");
+  eq(L.toLatin("Шўрва"), "sho'rva");
+});
+tc("U-36", "typo tolerance scales with length; numbers and short words must be exact", () => {
+  eq(L.checkText("Registn", { answer: "Registon" }).how, "typo");
+  eq(L.checkText("Smaraqand", { answer: "Samarqand" }).how, "typo");      // transposition
+  eq(L.checkText("Rgstn", { answer: "Registon" }).verdict, "no");          // 3 errors
+  eq(L.checkText("Oh", { answer: "Osh" }).verdict, "no");                  // ≤4 letters exact
+  eq(L.checkText("1992", { answer: "1991" }).verdict, "no");               // numbers exact
+  eq(L.checkText("Registn", { answer: "Registon", exact: true }).verdict, "no");
+});
+tc("U-37", "key words and partial answers", () => {
+  const q = { answer: "Nyuton", alts: ["Isaak Nyuton"], keywords: ["newton"], partial: ["tortishish qonuni", "gravitatsiya"] };
+  eq(L.checkText("Isaac Newton", q).how, "keyword");
+  eq(L.checkText("butun olam tortishish qonuni", q).verdict, "partial");
+  eq(L.checkText("Gravitatsiya", q).verdict, "partial");
+  eq(L.checkText("Eynshteyn", q).verdict, "no");
+  eq(L.checkText("   ", q).verdict, "no");
+});
+tc("U-38", "validator: bad lists, unknown hint, partial that is really correct, short key word", () => {
+  const base = deep(klassik), q = base.rounds[0].questions[0];
+  q.hint = "maybe"; q.partial = ["osh"]; q.keywords = ["os"];
+  const v = P.validatePack(base);
+  ok(v.errors.some((e) => e.msg.includes("Ishora")), "hint");
+  ok(v.errors.some((e) => e.msg.includes("qisman javob bo'la olmaydi")), "partial==answer");
+  ok(v.warnings.some((e) => e.msg.includes("juda qisqa")), "short keyword");
+  const b2 = deep(klassik); b2.rounds[0].questions[1].alts = ["", "x"];
+  ok(P.validatePack(b2).errors.some((e) => e.msg.includes("bo'sh qiymat")), "empty alt");
+});
+tc("U-39", "answerWords splits words and strips punctuation for letter boxes", () => {
+  eq(L.answerWords("U.S. Polo"), [["u", "s"], ["p", "o", "l", "o"]]);
+  eq(L.answerWords("Do'ppi"), [["d", "o'", "p", "p", "i"]]);
 });
 
 /* ---------- B. Answer & scoring logic (carried over from 1.x) ---------- */

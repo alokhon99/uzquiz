@@ -320,7 +320,7 @@ const suites = {
 
   // 1.x regression on the Klassik pack
   async klassikRegress() {
-    await startPack("klassik"); act("beginRound");
+    await startPack("klassik"); await playRound(true); act("nextRound"); act("beginRound");
     let { q } = cur();
     answer(false);
     check("V-50", $(`[data-opt="${(q.answer + 1) % 4}"]`).classList.contains("wrong") && $(`[data-opt="${q.answer}"]`).classList.contains("correct") && has("Noto'g'ri") && has("To'g'ri javob"), "wrong");
@@ -328,10 +328,10 @@ const suites = {
     ({ q } = cur());
     const b1 = $(`[data-opt="${q.answer}"]`), b2 = $(`[data-opt="${(q.answer + 1) % 4}"]`);
     b1.click(); b2.click();
-    check("V-51", U().game.results[0].filter(Boolean).length === 2 && U().game.results[0][1].c && !b2.classList.contains("wrong"), "double tap");
+    check("V-51", U().game.results[1].filter(Boolean).length === 2 && U().game.results[1][1].c && !b2.classList.contains("wrong"), "double tap");
     act("next");
     U().timer.remaining = 0.05; await wait(400);
-    check("V-52", has("Vaqt tugadi") && U().game.results[0][2].p === 0, "timeout");
+    check("V-52", has("Vaqt tugadi") && U().game.results[1][2].p === 0, "timeout");
     act("next");
     act("exit"); const t0 = U().timer.remaining; await wait(800);
     check("V-53", Math.abs(U().timer.remaining - t0) < 0.15, "pause on dialog");
@@ -345,7 +345,7 @@ const suites = {
     delete document.hidden;
     check("V-55", Math.abs(U().timer.remaining - t1) < 0.15, "pause when hidden");
     for (let i = 3; i < 7; i++) { answer(true); act("next"); }
-    act("nextRound"); await playRound(true); act("nextRound"); act("beginRound");
+    act("nextRound"); act("beginRound");
     check("V-56", $(".hint-text").innerText.includes("«T»") && $(".hint-text").innerText.includes("7 ta harf"), $(".hint-text").innerText);
     $("#answer").value = "  "; $("#text-form").requestSubmit();
     check("V-57", !U().game.results[2][0] && $("#answer").classList.contains("shake"), "empty");
@@ -362,6 +362,66 @@ const suites = {
     act("next"); act("nextRound");
     await until(() => $(".result-score"));
     act("home");
+  },
+
+  // 2.1: Rasminka — rasmli topishmoqlar, yozma javob, yumshoq tekshiruv, o'zi baholash
+  async rasminka() {
+    localStorage.removeItem("uzquiz.game.klassik");
+    await startPack("klassik", "Rasmin");
+    check("V-70", has("Rasminka") && has("Raund 1 / 6"), "intro");
+    act("beginRound");
+    const type = (v) => { $("#answer").value = v; $("#text-form").requestSubmit(); };
+    const fbText = () => $("#fb").innerText;
+    // 1. Osh — faqat harflar soni, sinonim (kalit so'z) qabul qilinadi
+    await until(() => U().timer && U().timer.started, 4000);
+    check("V-71", $(".q-card img") && U().timer.started && !$("#options"), "picture + typed input, timer started after image load");
+    check("V-72", !$(".hint-text").innerText.includes("«") && $(".hint-text").innerText.includes("2 ta harf") /* O + Sh */ && !$(".letters i.first"), $(".hint-text").innerText);
+    type("palov");
+    check("V-73", U().game.results[0][0].c && has("To'g'ri"), "synonym/keyword");
+    act("next");
+    // 2. Do'ppi — kirill yozuvida
+    await until(() => $("#text-form"));
+    check("V-74", $(".hint-text").innerText.includes("«D»"), "first letter hint");
+    type("Дўппи");
+    check("V-75", U().game.results[0][1].c, "Cyrillic accepted");
+    act("next");
+    // 3. Paxta — imlo xatosi bilan
+    await until(() => $("#text-form"));
+    type("Paxat");
+    check("V-76", U().game.results[0][2].c && fbText().includes("imlo xatosi"), fbText());
+    act("next");
+    // 4. Xiva — ishorasiz; «Xorazm» = qisman (yarim ochko); keyin o'zi baholaydi
+    await until(() => $("#text-form"));
+    check("V-77", !$(".hint") && !$(".letters"), "no hint");
+    const before = U().game.score;
+    type("Xorazm");
+    const half = U().game.results[0][3];
+    check("V-78", half.h && !half.c && half.p > 0 && half.p <= 8 && $("#fb .feedback.part") && has("Qisman to'g'ri") && fbText().includes("Sizning javobingiz: Xorazm"), JSON.stringify(half));
+    check("V-79", $('#fb [data-media="reveal"]') && $('[data-act="claim"]'), "reveal picture + claim button");
+    act("claim");
+    const claimed = U().game.results[0][3];
+    check("V-80", claimed.c && claimed.s && claimed.p >= 10 && U().game.score === before + claimed.p && !$('[data-act="claim"]') && has("Qabul qilindi") && $("#score").textContent.includes(String(U().game.score)), JSON.stringify(claimed));
+    check("V-81", JSON.parse(localStorage.getItem("uzquiz.game.klassik")).results[0][3].s === true && U().game.streak === 4, "saved + streak " + U().game.streak);
+    act("next");
+    // 5. Noto'g'ri javob — e'tiroz tugmasi bor, bosilmaydi
+    await until(() => $("#text-form"));
+    type("Amir Temur");
+    check("V-82", !U().game.results[0][4].c && U().game.results[0][4].p === 0 && $('[data-act="claim"]') && has("Noto'g'ri") && U().game.streak === 0, "wrong");
+    act("next");
+    // 6. O'tkazib yuborish — e'tiroz yo'q
+    await until(() => $("#text-form"));
+    act("skip");
+    check("V-83", !$('[data-act="claim"]') && has("O'tkazib yuborildi"), "skip has no claim");
+    act("next");
+    // 7. Vaqt tugadi — e'tiroz yo'q
+    await until(() => U().game.q === 6 && $("#text-form") && U().timer && U().timer.started && U().timer.running, 4000);
+    U().timer.remaining = 0.05; await wait(400);
+    check("V-84", has("Vaqt tugadi") && !$('[data-act="claim"]'), "timeout has no claim");
+    act("next");
+    check("V-85", has("4 / 7"), txt().slice(0, 300));
+    act("exit"); click('[data-modal-act="1"]');
+    localStorage.removeItem("uzquiz.game.klassik");
+    await home();
   },
 
   async small() {

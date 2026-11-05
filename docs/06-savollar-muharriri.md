@@ -46,6 +46,7 @@ Yuqoridagi yorliqlar: **📦 Paket**, raundlar (**1. …**, **2. …**) va **＋
 - Nomi, toifa, tavsif (katalogda ko'rinadi), yosh chegarasi (0+, 6+, 12+, 16+).
 - **Tezlik bonusi** — tez javob uchun +5 gacha ochko.
 - **To'g'ri javobni ko'rsatish** — xato javobdan keyin to'g'ri javob ko'rsatilsinmi.
+- **O'yinchi o'zi baholay oladi** — yozma javob qabul qilinmasa, «✋ Men to'g'ri topgandim» tugmasi chiqsinmi (odatda yoqilgan).
 - **Muqova** — emoji yoki rasm.
 - **📄 Nusxa olish** — paketdan yangi ID bilan nusxa yaratadi (media fayllari bilan birga).
 - **↩️ Qoralamani bekor qilish** — saqlanmagan o'zgarishlarni o'chiradi.
@@ -64,6 +65,24 @@ Yuqoridagi yorliqlar: **📦 Paket**, raundlar (**1. …**, **2. …**) va **＋
 - **Variantli:** 2–6 ta variant. To'g'ri variantni chapdagi harf bilan belgilang. Variantni **＋ Variant qo'shish** yoki ✕ bilan qo'shish va o'chirish mumkin.
 - **Ha / Yo'q:** to'g'ri javobni belgilang.
 - **Yozma:** to'g'ri javob va vergul bilan ajratilgan muqobil javoblar (masalan, `Navoiy` asosiy, `Alisher Navoiy` muqobil).
+
+### 🧑‍⚖️ Javobni tekshirish qoidalari (yozma savollar)
+Qog'ozda javob yozib, hakam tekshiradigan savollar uchun. Ilova javobni hakam kabi yumshoq tekshiradi. Katta-kichik harf, nuqta, tutuq belgisi, kirill/lotin yozuvi va x/h farqi o'z-o'zidan e'tiborga olinmaydi. 5 harfdan uzun javoblarda 1–2 ta imlo xatosi kechiriladi.
+
+| Maydon | Nima uchun | Misol (U.S. Polo savoli) |
+|---|---|---|
+| **To'g'ri javob** | Ekranda ko'rsatiladigan javob | `U.S. Polo Assn` |
+| **Muqobil javoblar** | Har biri to'liq ochko | `US Polo` |
+| **Kalit so'zlar** | Javobda shu so'z bo'lsa — to'liq ochko | `polo` |
+| **Qisman to'g'ri** | Yarim ochko (to'g'ri yo'nalish, lekin to'liq emas) | Xiva savolida: `Xorazm` |
+| **O'yinchiga ishora** | Birinchi harf + harflar soni / faqat harflar soni / ishorasiz | Topishmoqlar uchun «faqat harflar soni» yoki «ishorasiz» |
+| **Aniq yozilishi shart** | Imlo xatosini kechirmaslik (yillar, raqamlar, juda o'xshash javoblar uchun) | — |
+
+**🧪 Sinab ko'ring** maydoniga o'yinchi yozishi mumkin bo'lgan javobni kiriting. Muharrir darhol ✅ To'g'ri, 🤏 Qisman yoki ❌ Qabul qilinmaydi deb ko'rsatadi. Har bir topishmoq uchun 3–4 xil yozilishni tekshirib ko'ring.
+
+> 💡 Ilova javobni qabul qilmasa, o'yinchi **«✋ Men to'g'ri topgandim»** tugmasi bilan e'tiroz bildirishi mumkin. Buni **📦 Paket** yorlig'ida o'chirib qo'yish mumkin («O'yinchi yozma javobini o'zi baholay oladi»).
+
+> ⚖️ Boshqa kompaniyalarning logotiplari va boshqalar olgan fotosuratlar ham mualliflik huquqi bilan himoyalangan. Pullik paketlarga qo'shishdan oldin ruxsat oling.
 - ↑ ↓ — tartibni o'zgartirish, 🗑️ — o'chirish.
 - **Qiziqarli fakt** — javobdan keyin 💡 bilan ko'rsatiladi.
 

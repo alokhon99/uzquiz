@@ -1,6 +1,6 @@
 // Uzquiz 2.0 — savollar paketi formati (schema 2): tekshirish, katalog yozuvi, v1 dan ko'chirish.
 // Sof funksiyalar — brauzerda ham, Node.js testlarida ham ishlaydi.
-import { normalize, firstLetter, lastLetter, capLetter } from "./logic.js";
+import { normalize, firstLetter, lastLetter, capLetter, looseKey, checkText } from "./logic.js";
 
 export const SCHEMA = 2;
 export const LIMITS = { rounds: [1, 10], questions: [1, 20], options: [2, 6], time: [5, 120] };
@@ -137,6 +137,12 @@ export function validatePack(pack) {
         if (!Number.isInteger(q.answer) || q.answer < 0 || q.answer >= o.length) E(ri, qi, "To'g'ri javob belgilanmagan");
       } else if (q.type === "text") {
         if (!nonEmpty(q.answer)) E(ri, qi, "To'g'ri javob bo'sh");
+        for (const f of ["alts", "keywords", "partial"]) {
+          if (q[f] != null && (!Array.isArray(q[f]) || q[f].some((x) => !nonEmpty(x)))) E(ri, qi, `«${f}» ro'yxatida bo'sh qiymat bor`);
+        }
+        if (q.hint != null && !["letters", "count", "none"].includes(q.hint)) E(ri, qi, "Ishora turi noma'lum");
+        (q.keywords || []).forEach((k) => { if (nonEmpty(k) && looseKey(k).replace(/ /g, "").length < 3) W(ri, qi, `Kalit so'z «${k}» juda qisqa — tasodifiy javoblar ham qabul qilinishi mumkin`); });
+        if (nonEmpty(q.answer)) (q.partial || []).forEach((x) => { if (nonEmpty(x) && checkText(x, { ...q, partial: [] }).verdict === "ok") E(ri, qi, `«${x}» qisman javob bo'la olmaydi — u to'liq to'g'ri deb qabul qilinadi`); });
       } else if (q.type === "truefalse") {
         if (typeof q.answer !== "boolean") E(ri, qi, "To'g'ri javob (Ha / Yo'q) belgilanmagan");
       } else E(ri, qi, "Savol turi noma'lum");

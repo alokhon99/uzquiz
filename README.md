@@ -1,4 +1,4 @@
-# Uzquiz — O'zbekcha viktorina (2.0-α)
+# Uzquiz — O'zbekcha viktorina (2.1)
 
 Live: https://alokhon99.github.io/uzquiz/ · Pack editor: https://alokhon99.github.io/uzquiz/admin.html
 
@@ -15,21 +15,21 @@ Open http://localhost:5173 (use device mode, or a phone on the same network).
 node tests/run-tests.mjs
 ```
 Browser suites run inside the open page (served by `serve.mjs` under `/__tests/`):
-- game: `const m = await import('/__tests/e2e.js'); await m.run('media')` — suites: catalogue, klassikFull, media, audio, mediaFail, back, multi1/2, migrate1/2, offline, corrupt1/2, timerOff, klassikRegress, deeplink1/2, small
-- editor (on `admin.html`, GitHub mocked): `const m = await import('/__tests/admin-e2e.js'); await m.run('upload')` — suites: list, create, edit, afterReload, upload, preview, publish, duplicate, discard
+- game: `const m = await import('/__tests/e2e.js'); await m.run('media')` — suites: catalogue, rasminka, klassikFull, media, audio, mediaFail, back, multi1/2, migrate1/2, offline, corrupt1/2, timerOff, klassikRegress, deeplink1/2, small
+- editor (on `admin.html`, GitHub mocked): `const m = await import('/__tests/admin-e2e.js'); await m.run('upload')` — suites: list, create, edit, afterReload, upload, preview, publish, duplicate, discard, rules
 
 ## Structure
 | Path | What |
 |---|---|
 | `app/index.html`, `app/css/styles.css`, `app/js/app.js` | Player app: catalogue, pack page, game, media player |
 | `app/js/pack.js` | Pack format (schema 2): validation, catalogue entries, limits, v1 migration |
-| `app/js/logic.js` | Scoring, answer matching, Uzbek letters |
+| `app/js/logic.js` | Scoring, lenient answer matching (Cyrillic/Latin, typos, key words, partial), Uzbek letters |
 | `app/js/mediastore.js` | IndexedDB store for not-yet-published media (editor + preview) |
 | `app/admin.html`, `app/js/admin.js`, `app/css/admin.css` | Pack editor: packs, rounds, questions, media upload, validation, preview, publish |
 | `app/packs/index.json`, `app/packs/<id>/pack.json`, `app/packs/<id>/media/` | Catalogue, packs, media |
 | `app/sw.js`, `app/manifest.webmanifest` | Offline + installable |
 | `tools/` | Pack generators (demo audio/video/images), v1 migration, `build-index.mjs` |
-| `docs/` | Requirements (01, 07), test scenarios (03, 08), bug report (04), Uzbek manuals (05 player, 06 editor) |
+| `docs/` | Requirements (01, 07, 09), test scenarios (03, 08), bug report (04), Uzbek manuals (05 player, 06 editor) |
 
 ## Publishing
 - **Content:** the editor commits `pack.json` + media + `index.json` to `main` and `gh-pages` in one commit per branch. Run `git pull` before working locally.

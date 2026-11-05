@@ -590,13 +590,21 @@ function showQuestion() {
       <button class="option" data-tf="false"><span class="key">✕</span><span>Yo'q, noto'g'ri</span></button>
     </div>`;
   } else {
+    // Ishora: letters — birinchi harf + kataklar, count — faqat kataklar, none — ishorasiz (2.1).
+    const hintMode = r.kind === "chain" ? "letters" : q.hint || "letters";
     const letter = r.kind === "chain" ? L.chainHintLetter(r, game.q) : L.firstLetter(q.answer);
-    const letters = L.uzLetters(q.answer);
+    const words = L.answerWords(q.answer);
+    const total = words.reduce((s, w) => s + w.length, 0);
+    const size = `${total} ta harf${words.length > 1 ? ` · ${words.length} so'z` : ""}`;
+    const boxes = words.map((w, wi) => w.map((l, li) => {
+      const first = hintMode === "letters" && wi === 0 && li === 0;
+      return `<i class="${first ? "first" : ""}">${first ? esc(L.capLetter(l)) : ""}</i>`;
+    }).join("")).join(`<i class="gap"></i>`);
     body = `
-      <div class="hint">
-        <div class="hint-text">Javob «<b>${esc(L.capLetter(letter))}</b>» harfi bilan boshlanadi · ${letters.length} ta harf</div>
-        <div class="letters" aria-hidden="true">${letters.map((l, i) => `<i class="${i === 0 ? "first" : ""}">${i === 0 ? esc(L.capLetter(l)) : ""}</i>`).join("")}</div>
-      </div>
+      ${hintMode === "none" ? "" : `<div class="hint">
+        <div class="hint-text">${hintMode === "letters" ? `Javob «<b>${esc(L.capLetter(letter))}</b>» harfi bilan boshlanadi · ` : ""}${size}</div>
+        <div class="letters" aria-hidden="true">${boxes}</div>
+      </div>`}
       <form id="text-form" autocomplete="off">
         <label class="sr-only" for="answer">Javobingiz</label>
         <input id="answer" class="input" placeholder="Javobni yozing…" autocapitalize="words" autocorrect="off" spellcheck="false" enterkeyhint="send" />
@@ -678,8 +686,37 @@ function submitText() {
     input.classList.remove("shake"); void input.offsetWidth; input.classList.add("shake"); vibrate(30);
     return;
   }
-  const correct = L.isTextCorrect(input.value, Q());
-  finishAnswer(correct, correct ? "ok" : "wrong");
+  const res = L.checkText(input.value, Q());
+  const ok = res.verdict === "ok";
+  finishAnswer(ok, ok ? "ok" : res.verdict === "partial" ? "partial" : "wrong", { typed: input.value.trim(), how: res.how });
+}
+
+/** O'yinchi «Men to'g'ri topgandim» deb hakamlik qiladi (2.1, o'zi baholagan javob). */
+let claim = null;
+function claimCorrect() {
+  if (!claim || !game || game.phase !== "feedback") return;
+  const { ri, qi, full, prevStreak } = claim;
+  claim = null;
+  const prev = game.results[ri][qi];
+  game.results[ri][qi] = { c: true, p: full, s: true };
+  game.score += full - prev.p;
+  game.streak = prevStreak + 1;
+  save();
+  const pill = document.getElementById("score");
+  if (pill) { pill.textContent = `⭐ ${game.score}`; pill.classList.add("bump"); }
+  document.querySelectorAll(".letters i:not(.gap)").forEach((b) => { b.classList.remove("bad"); b.classList.add("ok"); });
+  const fb = app.querySelector("#fb .feedback");
+  if (fb) {
+    fb.classList.remove("bad", "part");
+    fb.classList.add("ok");
+    fb.querySelector(".fb-title span").textContent = "Qabul qilindi ✋";
+    fb.querySelector(".fb-title .pts").textContent = `+${full}`;
+  }
+  const btn = app.querySelector("[data-act=claim]");
+  if (btn) btn.outerHTML = `<div class="fb-note">✋ O'zingiz baholadingiz. Bu javob natijada belgilanadi.</div>`;
+  sfx.correct();
+  vibrate(25);
+  toast("Javobingiz qabul qilindi");
 }
 
 function correctText(q) {
@@ -688,9 +725,10 @@ function correctText(q) {
   return q.answer;
 }
 
-function finishAnswer(correct, reason) {
+function finishAnswer(correct, reason, extra = {}) {
   if (answered) return;
   answered = true;
+  claim = null;
   const r = R(), q = Q();
   const limit = P.questionTime(r, q);
   const excluded = reason === "mediaFail";
@@ -701,10 +739,16 @@ function finishAnswer(correct, reason) {
   app.querySelectorAll('[data-act="mplay"]').forEach((b) => (b.disabled = true));
   const showCorrect = pack.settings?.showCorrect !== false;
 
-  const points = excluded ? 0 : L.calcPoints({ correct, timeLeft, timeLimit: limit, base: P.questionPoints(r, q), timerOn: game.timerOn && pack.settings?.speedBonus !== false });
-  game.results[game.round][game.q] = excluded ? { c: false, p: 0, x: true } : { c: correct, p: points };
+  const partial = reason === "partial";
+  const fullPoints = L.calcPoints({ correct: true, timeLeft, timeLimit: limit, base: P.questionPoints(r, q), timerOn: game.timerOn && pack.settings?.speedBonus !== false });
+  const points = excluded ? 0 : correct ? fullPoints : partial ? Math.round(fullPoints / 2) : 0;
+  game.results[game.round][game.q] = excluded ? { c: false, p: 0, x: true } : partial ? { c: false, p: points, h: true } : { c: correct, p: points };
   game.score += points;
+  const prevStreak = game.streak;
   if (!excluded) game.streak = correct ? game.streak + 1 : 0;
+  // O'zi baholash: yozma javob noto'g'ri yoki qisman deb topilsa, o'yinchi e'tiroz bildira oladi.
+  const canClaim = q.type === "text" && (reason === "wrong" || partial) && extra.typed && showCorrect && pack.settings?.selfJudge !== false;
+  if (canClaim) claim = { ri: game.round, qi: game.q, full: fullPoints, prevStreak };
   game.phase = "feedback";
   save();
 
@@ -720,24 +764,28 @@ function finishAnswer(correct, reason) {
     if (input) { input.disabled = true; input.blur(); }
     document.querySelectorAll("#text-form button").forEach((b) => (b.disabled = true));
     if (showCorrect || correct) {
-      const boxes = document.querySelectorAll(".letters i");
-      L.uzLetters(q.answer).forEach((l, i) => { if (boxes[i]) { boxes[i].textContent = L.capLetter(l); boxes[i].classList.add(correct ? "ok" : "bad"); } });
+      const boxes = document.querySelectorAll(".letters i:not(.gap)");
+      L.answerWords(q.answer).flat().forEach((l, i) => { if (boxes[i]) { boxes[i].textContent = L.capLetter(l); boxes[i].classList.add(correct ? "ok" : partial ? "part" : "bad"); } });
     }
   }
   document.getElementById("progress").style.width = `${((game.q + 1) / r.questions.length) * 100}%`;
   const pill = document.getElementById("score");
   pill.textContent = `⭐ ${game.score}`;
   if (correct) pill.classList.add("bump");
-  if (!excluded) { if (correct) { sfx.correct(); vibrate(25); } else { sfx.wrong(); vibrate([40, 60, 40]); } }
+  if (!excluded) { if (correct || partial) { sfx.correct(); vibrate(25); } else { sfx.wrong(); vibrate([40, 60, 40]); } }
 
-  const title = excluded ? "Savol hisobga olinmadi" : correct ? "To'g'ri! 🎉" : reason === "timeout" ? "Vaqt tugadi ⏰" : reason === "skip" ? "O'tkazib yuborildi ⏭️" : "Noto'g'ri 😕";
+  const title = excluded ? "Savol hisobga olinmadi" : correct ? "To'g'ri! 🎉" : partial ? "Qisman to'g'ri 🤏" : reason === "timeout" ? "Vaqt tugadi ⏰" : reason === "skip" ? "O'tkazib yuborildi ⏭️" : "Noto'g'ri 😕";
   const last = game.q === r.questions.length - 1;
   const showAnswerLine = !excluded && !q.final && showCorrect && !(correct && q.type !== "text");
   document.getElementById("fb").innerHTML = `
-    <div class="feedback ${correct ? "ok" : "bad"}" role="alert">
+    <div class="feedback ${correct ? "ok" : partial ? "part" : "bad"}" role="alert">
       <div class="fb-title"><span>${title}</span><span class="pts">+${points}</span></div>
       ${q.final ? `<div class="theme-reveal">🕵️ Yashirin mavzu: ${esc(r.hiddenTheme)}</div>` : ""}
+      ${extra.typed && !correct ? `<div class="fb-answer">Sizning javobingiz: <b>${esc(extra.typed)}</b></div>` : ""}
       ${showAnswerLine ? `<div class="fb-answer">To'g'ri javob: <b>${esc(correctText(q))}</b></div>` : ""}
+      ${correct && extra.how === "typo" ? `<div class="fb-note">✍️ Kichik imlo xatosi bilan qabul qilindi</div>` : ""}
+      ${partial ? `<div class="fb-note">Javobingiz to'g'ri yo'nalishda — yarim ochko.</div>` : ""}
+      ${canClaim ? `<button class="btn btn-secondary claim-btn" data-act="claim">✋ Men to'g'ri topgandim</button>` : ""}
       ${q.reveal ? mediaBlock(q.reveal, "reveal") : ""}
       ${q.fact && !excluded ? `<div class="fb-fact">💡 ${esc(q.fact)}</div>` : ""}
       <button class="btn btn-primary" data-act="next">${last ? "Raund natijasi" : "Keyingi"} →</button>
@@ -798,7 +846,9 @@ function finishGame() {
   const correct = per.reduce((s, x) => s + x.correct, 0);
   const counted = per.reduce((s, x) => s + x.total, 0);
   const accuracy = counted ? Math.round((correct / counted) * 100) : 0;
-  lastResult = { packId: pack.id, name: game.name, score: game.score, correct, counted, accuracy, timerOn: game.timerOn, perRound: per };
+  const flat = game.results.flat().filter(Boolean);
+  lastResult = { packId: pack.id, name: game.name, score: game.score, correct, counted, accuracy, timerOn: game.timerOn, perRound: per,
+    selfJudged: flat.filter((x) => x.s).length, partial: flat.filter((x) => x.h).length };
   const records = loadRecords();
   lastResult.isBest = L.isNewRecord(records.filter((r) => r.packId === pack.id), game.score);
   records.push({ packId: pack.id, packTitle: pack.title, name: game.name, score: game.score, correct, total: counted, date: Date.now() });
@@ -830,6 +880,7 @@ async function showFinal() {
       <div class="card stat"><b>${res.accuracy}%</b><span>aniqlik</span></div>
       <div class="card stat"><b>${pack.rounds.length}</b><span>raund</span></div>
     </div>
+    ${res.selfJudged || res.partial ? `<p class="muted center small-note">${[res.partial ? `🤏 ${res.partial} ta qisman to'g'ri` : "", res.selfJudged ? `✋ ${res.selfJudged} ta javobni o'zingiz baholadingiz` : ""].filter(Boolean).join(" · ")}</p>` : ""}
     <div class="card breakdown">
       ${pack.rounds.map((r, i) => {
         const st = res.perRound[i];
@@ -980,6 +1031,7 @@ const actions = {
   continue() { const g = savedGame(pack); if (g) resumeGame(g); else showDetail(); },
   beginRound() { showQuestion(); },
   next() { nextQuestion(); },
+  claim() { claimCorrect(); },
   skip() { if (!answered && !modalOpen()) finishAnswer(false, "skip"); },
   mediaSkip() { if (!answered) finishAnswer(false, "mediaFail"); },
   mplay(el) {

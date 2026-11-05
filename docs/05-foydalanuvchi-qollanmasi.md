@@ -69,9 +69,27 @@ Har bir raund boshlanishidan oldin ma'lumot kartasi chiqadi: raund raqami, nomi,
 |---|---|
 | **Variantli** | 2–6 ta variantdan bittasiga teging |
 | **Ha / Yo'q** | «✓ Ha, to'g'ri» yoki «✕ Yo'q, noto'g'ri» tugmasini bosing |
-| **Yozma javob** | Javobni yozing va **«Javob berish»** yoki **Enter** tugmasini bosing. Javob qaysi harf bilan boshlanishi va necha harfdan iboratligi ko'rsatiladi |
+| **Yozma javob** | Javobni yozing va **«Javob berish»** yoki **Enter** tugmasini bosing. Savolga qarab, javobning birinchi harfi va harflar soni, faqat harflar soni ko'rsatiladi yoki ishora berilmaydi |
 
-Yozma javoblarda katta-kichik harf va tutuq belgisining shakli (`o'`, `oʻ`, `o’`) ahamiyatsiz. O'zbek alifbosida **sh, ch, o', g'** bitta harf hisoblanadi.
+### Yozma javob qanday tekshiriladi
+Ilova javobni xuddi hakam kabi tekshiradi:
+- katta-kichik harf, nuqta, bo'sh joy va tutuq belgisining shakli (`o'`, `oʻ`, `o’`) ahamiyatsiz;
+- **kirill yozuvida ham** yozish mumkin: «Хива» = «Xiva»;
+- uzunroq so'zlarda **kichik imlo xatosi** kechiriladi: «Registn» → Registon. Qisqa so'zlar va raqamlar esa aniq yozilishi kerak;
+- muqobil javoblar ham qabul qilinadi: «Palov» = «Osh».
+
+O'zbek alifbosida **sh, ch, o', g'** bitta harf hisoblanadi («Osh» — 2 ta harf).
+
+| Natija | Ochko |
+|---|---|
+| ✅ **To'g'ri** | To'liq ochko |
+| 🤏 **Qisman to'g'ri** (masalan, shahar o'rniga viloyat) | Yarim ochko |
+| ❌ **Noto'g'ri** | 0 |
+
+**✋ Men to'g'ri topgandim.** Agar javobingiz to'g'ri bo'lsa-yu, ilova uni qabul qilmasa (masalan, boshqacha yozgan bo'lsangiz), to'g'ri javob bilan solishtiring va shu tugmani bosing. To'liq ochko beriladi, natija ekranida esa nechta javobni o'zingiz baholaganingiz ko'rsatiladi. Halol o'ynang! 😉 Bu tugma faqat javob yozganingizda chiqadi (o'tkazib yuborganda yoki vaqt tugaganda chiqmaydi).
+
+### 🖼️ Rasminka (Klassik paketi, 1-raund)
+7 ta rasmli topishmoq. Rasmga diqqat bilan qarang, undagi ishoralarni bog'lang va javobni o'zingiz yozing. Variantlar berilmaydi. Har bir savolga 45 soniya beriladi.
 
 ---
 
@@ -103,6 +121,7 @@ Yozma javoblarda katta-kichik harf va tutuq belgisining shakli (`o'`, `oʻ`, `o�
 | Holat | Ochko |
 |---|---|
 | To'g'ri javob | Raund ochkosi (odatda **10**, ba'zi raundlarda 15) + tezlik bonusi **0–5** |
+| Qisman to'g'ri javob | Yuqoridagining yarmi |
 | Yashirin mavzu savoli | Odatda **20** + tezlik bonusi |
 | Noto'g'ri / o'tkazilgan / vaqt tugagan | 0 |
 | Media yuklanmagan savol | Hisobga olinmaydi |

@@ -82,3 +82,25 @@ Role: QA · Source: `07-requirements-v2-packs.md` (increment 2.0-α: Epics 1, 2,
 | AD-11 | — | 401 from GitHub | Clear error, retry possible |
 | AD-12 | AD-03 | Duplicate pack | New id, draft status, media copied |
 | AD-13 | — | Draft survives reload; "Qoralamani bekor qilish" restores live version | — |
+
+## 2.1 — Typed answers judged like a human (Rasminka)
+Requirements: `09-requirements-2.1-typed-answers.md`.
+
+| ID | Req | Scenario | Expected |
+|---|---|---|---|
+| U-34 | TA-13 | Klassik round 1 content | "Rasminka", 7 typed questions, 7 different pictures; own answers accepted; partials give half |
+| U-35 | TA-01/02 | "Ю.С. Поло", "U.S Polo.", "Хива", "Hiva", "Улуғбек" | Accepted |
+| U-36 | TA-03 | "Registn", "Smaraqand" accepted as typos; "Rgstn", "Oh" (for Osh), "1992" (for 1991) and `exact` rejected | As stated |
+| U-37 | TA-05/06 | "Isaac Newton" (key word), "butun olam tortishish qonuni" (partial), "Eynshteyn" | ok / partial / no |
+| U-38 | TA-12 | Unknown hint, partial equal to answer, 2-letter key word, empty alt | Error / error / warning / error |
+| U-39 | TA-09 | Letter boxes for "U.S. Polo", "Do'ppi" | [u,s] [p,o,l,o]; d,o',p,p,i |
+| V-70 | TA-13 | Start Klassik | Round 1 intro "Rasminka" |
+| V-71 | MD-04 | Picture riddle | Image, typed input, no options; timer starts after image loads |
+| V-72 | TA-09 | Hint "count" (Osh) | "2 ta harf" (O + Sh), no first letter |
+| V-73…76 | TA-02/03/05 | "palov", "Дўппи", "Paxat" | All correct; typo note shown for "Paxat" |
+| V-77 | TA-09 | Hint "none" (Xiva) | No hint, no letter boxes |
+| V-78 | TA-06/10 | "Xorazm" | Yellow "Qisman to'g'ri", half points, "Sizning javobingiz: Xorazm" |
+| V-79…81 | TA-07 | Reveal + "✋ Men to'g'ri topgandim" | Full points, score pill updated, streak restored, saved as self-judged, button removed |
+| V-82…84 | TA-07 | Wrong answer / skip / timeout | Claim button only for the wrong typed answer |
+| V-85 | — | Round result | 4 / 7 correct |
+| AD-20…24 | TA-11/12 | Editor: rules panel, live test box, partial = answer error, hint/exact saved, discard | As stated |

@@ -2,7 +2,7 @@
   "schema": 2,
   "id": "klassik",
   "title": "Uzquiz Klassik",
-  "description": "Asl Uzquiz o'yini: rasmli savollar, bilimdonlar bellashuvi, so'z zanjiri, kino, musiqa va yashirin mavzu — 6 raund, 42 savol.",
+  "description": "Asl Uzquiz o'yini: «Rasminka» rasmli topishmoqlari, bilimdonlar bellashuvi, so'z zanjiri, kino, musiqa va yashirin mavzu — 6 raund, 42 savol.",
   "category": "umumiy",
   "cover": {
     "type": "emoji",
@@ -18,127 +18,205 @@
   },
   "rounds": [
     {
-      "title": "Rasmli savollar",
+      "title": "Rasminka",
       "icon": "🖼️",
       "color": "#7C5CFF",
-      "description": "Rasmga diqqat bilan qarang va to'g'ri javobni tanlang. Oson savollar bilan qiziqarli boshlaymiz!",
+      "description": "Rasmga diqqat bilan qarang, mantiqni toping va javobni o'zingiz yozing. Variantlar yo'q — faqat zukkoligingiz! Yozish xatolari va kirill yozuvi ham qabul qilinadi.",
       "kind": "standard",
-      "timeLimit": 20,
+      "timeLimit": 45,
       "points": 10,
       "questions": [
         {
-          "type": "choice",
-          "text": "Rasmda qanday meva tasvirlangan?",
-          "media": {
-            "type": "emoji",
-            "value": "🍎"
-          },
-          "options": [
-            "Olma",
-            "Nok",
-            "Anor",
-            "Shaftoli"
-          ],
-          "answer": 0
-        },
-        {
-          "type": "choice",
-          "text": "Bu qanday hayvon?",
-          "media": {
-            "type": "emoji",
-            "value": "🐘"
-          },
-          "options": [
-            "Fil",
-            "Ot",
-            "Tuya",
-            "Karkidon"
-          ],
-          "answer": 0,
-          "fact": "Fil — quruqlikdagi eng katta sutemizuvchi hayvon."
-        },
-        {
-          "type": "choice",
-          "text": "Bu qaysi davlatning bayrog'i?",
+          "type": "text",
+          "text": "Bu qaysi milliy taom?",
           "media": {
             "type": "image",
-            "src": "media/uz-flag.svg",
-            "alt": "Ko'k, oq va yashil yo'lli, oy va 12 yulduzli bayroq",
+            "src": "media/qozon.svg",
+            "alt": "Olov ustidagi qora qozonda guruch, sariq va to'q sariq sabzi, ustida sarimsoq piyoz; yonida kapgir",
             "rights": {
               "source": "Uzquiz jamoasi",
               "licence": "own",
               "holder": "Uzquiz"
             }
           },
-          "options": [
-            "O'zbekiston",
-            "Qozog'iston",
-            "Tojikiston",
-            "Ozarbayjon"
+          "answer": "Osh",
+          "alts": [
+            "Palov",
+            "Plov",
+            "Osh palov",
+            "Oshi palov"
           ],
-          "answer": 0,
-          "fact": "O'zbekiston bayrog'idagi 12 yulduz 12 oyni anglatadi."
+          "keywords": [
+            "palov"
+          ],
+          "hint": "count",
+          "fact": "«Palov madaniyati va an'analari» 2016-yilda YUNESKOning nomoddiy madaniy meros ro'yxatiga kiritilgan."
         },
         {
-          "type": "choice",
-          "text": "Cho'lda yashaydigan bu hayvon nima deb ataladi?",
+          "type": "text",
+          "text": "Bu bosh kiyim qanday ataladi?",
           "media": {
-            "type": "emoji",
-            "value": "🐪"
+            "type": "image",
+            "src": "media/doppi.svg",
+            "alt": "Qora to'rt qirrali bosh kiyim, ustida oq qalampir shaklidagi naqshlar",
+            "rights": {
+              "source": "Uzquiz jamoasi",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
           },
-          "options": [
-            "Tuya",
-            "Ot",
-            "Eshak",
-            "Qo'y"
+          "answer": "Do'ppi",
+          "alts": [
+            "Chust do'ppi",
+            "Chust do'ppisi",
+            "Tyubeteyka"
           ],
-          "answer": 0,
-          "fact": "Tuya suv ichmasdan bir necha hafta yura oladi."
+          "keywords": [
+            "do'ppi"
+          ],
+          "hint": "letters",
+          "fact": "Qora fonda oq «qalampir» naqshli bu do'ppi Chust do'ppisi deb ataladi. Qalampir yovuz ko'zdan asraydi deb hisoblangan."
         },
         {
-          "type": "choice",
-          "text": "Bu poliz mahsulotining nomi nima?",
+          "type": "text",
+          "text": "O'zbekistonda «oq oltin» deb ataladigan bu o'simlik nima?",
           "media": {
-            "type": "emoji",
-            "value": "🍉"
+            "type": "image",
+            "src": "media/paxta.svg",
+            "alt": "Oq momiq tolali chanoqlari ochilgan o'simlik shoxi, quyoshli dala",
+            "rights": {
+              "source": "Uzquiz jamoasi",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
           },
-          "options": [
-            "Tarvuz",
-            "Qovun",
-            "Qovoq",
-            "Bodring"
+          "answer": "Paxta",
+          "alts": [
+            "G'o'za",
+            "Paxta o'simligi"
           ],
-          "answer": 0
+          "hint": "count",
+          "fact": "Paxta chanoqlari O'zbekiston Respublikasi Davlat gerbida bug'doy boshoqlari bilan birga tasvirlangan."
         },
         {
-          "type": "choice",
-          "text": "Bu to'p qaysi sport turida ishlatiladi?",
+          "type": "text",
+          "text": "Bu keng va kalta, oxiriga yetkazilmagan minora qaysi shaharda joylashgan?",
           "media": {
-            "type": "emoji",
-            "value": "⚽"
+            "type": "image",
+            "src": "media/kalta-minor.svg",
+            "alt": "Ko'k va feruza koshinli yo'l-yo'l keng, past minora, atrofida qal'a devori",
+            "rights": {
+              "source": "Uzquiz jamoasi",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
           },
-          "options": [
-            "Futbol",
-            "Basketbol",
-            "Tennis",
-            "Voleybol"
+          "reveal": {
+            "type": "image",
+            "src": "media/xiva-reveal.svg",
+            "alt": "Xiva, Ichan qal'a, Kalta Minor haqida ma'lumot kartasi",
+            "rights": {
+              "source": "Uzquiz jamoasi",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "answer": "Xiva",
+          "alts": [
+            "Khiva",
+            "Ichan qal'a"
           ],
-          "answer": 0
+          "partial": [
+            "Xorazm"
+          ],
+          "hint": "none",
+          "fact": "Kalta Minor 1851-yilda qurila boshlangan. Muhammad Aminxon vafotidan so'ng qurilish to'xtab qolgan."
         },
         {
-          "type": "choice",
-          "text": "Rasmda nima tasvirlangan?",
+          "type": "text",
+          "text": "Yer ostiga qazilgan bu ulkan yoy qaysi olimning rasadxonasiga tegishli?",
           "media": {
-            "type": "emoji",
-            "value": "🌙"
+            "type": "image",
+            "src": "media/sekstant.svg",
+            "alt": "Tungi osmon ostida yerga chuqur kirib borgan ulkan darajali yoy, zinapoya va yulduzga yo'nalgan chiziq",
+            "rights": {
+              "source": "Uzquiz jamoasi",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
           },
-          "options": [
-            "Oy",
-            "Quyosh",
-            "Yulduz",
-            "Bulut"
+          "answer": "Ulug'bek",
+          "alts": [
+            "Mirzo Ulug'bek",
+            "Ulugbek"
           ],
-          "answer": 0
+          "keywords": [
+            "ulug'bek"
+          ],
+          "partial": [
+            "Samarqand"
+          ],
+          "hint": "letters",
+          "fact": "Ulug'bek rasadxonasi XV asrda Samarqandda qurilgan. «Ziji jadidi Ko'ragoniy» jadvalida 1018 ta yulduz o'rni ko'rsatilgan."
+        },
+        {
+          "type": "text",
+          "text": "Rasm qaysi olim va uning mashhur kashfiyotiga ishora qilmoqda? Olimning ismini yozing.",
+          "media": {
+            "type": "image",
+            "src": "media/olma.svg",
+            "alt": "Olma daraxti ostida parikli kishi kitob bilan o'tiribdi, uning tepasiga olma tushmoqda",
+            "rights": {
+              "source": "Uzquiz jamoasi",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "answer": "Nyuton",
+          "alts": [
+            "Isaak Nyuton",
+            "Newton",
+            "Isaac Newton",
+            "Nyuton Isaak"
+          ],
+          "keywords": [
+            "nyuton",
+            "newton"
+          ],
+          "partial": [
+            "Tortishish qonuni",
+            "Gravitatsiya",
+            "Tortishish"
+          ],
+          "hint": "count",
+          "fact": "Rivoyatga ko'ra, daraxtdan tushgan olma Isaak Nyutonni butun olam tortishish qonuni haqida o'ylashga undagan."
+        },
+        {
+          "type": "text",
+          "text": "Uchta madrasa bir-biriga qarab turgan bu mashhur maydon qanday ataladi?",
+          "media": {
+            "type": "image",
+            "src": "media/uch-madrasa.svg",
+            "alt": "Uchta baland peshtoqli, minorali va feruza gumbazli madrasa bir maydonda",
+            "rights": {
+              "source": "Uzquiz jamoasi",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "answer": "Registon",
+          "alts": [
+            "Registon maydoni",
+            "Registan"
+          ],
+          "keywords": [
+            "registon"
+          ],
+          "partial": [
+            "Samarqand"
+          ],
+          "hint": "letters",
+          "fact": "Registon maydonini Ulug'bek (XV asr), Sherdor va Tillakori (XVII asr) madrasalari o'rab turadi."
         }
       ]
     },

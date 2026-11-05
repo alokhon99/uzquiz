@@ -241,6 +241,31 @@ const suites = {
     const keys = await mediaStore.keys();
     check("AD-14", !$('[data-id="diqqat-nusxa"]') && !localStorage.getItem("uzquiz.admin.draft.diqqat-nusxa") && !keys.some((k) => k.startsWith("diqqat-nusxa/")), "new draft discarded with its media");
   },
+  // 2.1: javobni tekshirish qoidalari (Rasminka)
+  async rules() {
+    localStorage.removeItem("uzquiz.admin.draft.klassik");
+    await until(() => $(".pack-rows"));
+    $('[data-id="klassik"]').click();
+    await until(() => $('.tab[data-i="0"]'), 4000);
+    act("tab", '[data-i="0"]');
+    const box = await until(() => $("#q-0-3 .ans-ed"));
+    check("AD-20", box && box.open && box.querySelector('[data-path$=".partial"]').value === "Xorazm" && box.querySelector('select[data-path$=".hint"]').value === "none", "fields filled from pack");
+    const t = box.querySelector(".try-ans"), res = () => $("#try-0-3").className;
+    type(t, "Хива"); const a = res();
+    type(t, "Xorazm"); const b = res();
+    type(t, "Buxoro"); const c = res();
+    check("AD-21", a.includes("ok") && b.includes("partial") && c.includes("no"), [a, b, c].join(" / "));
+    type(box.querySelector('[data-path$=".partial"]'), "Xorazm, Xiva");
+    check("AD-22", errCount() === 1 && $("#q-0-3 .msgs").innerText.includes("qisman javob bo'la olmaydi"), $("#q-0-3 .msgs").innerText);
+    type(box.querySelector('[data-path$=".partial"]'), "Xorazm");
+    choose(box.querySelector('select[data-path$=".hint"]'), "count");
+    box.querySelector('[data-path$=".exact"]').click();
+    const q = A().draft.pack.rounds[0].questions[3];
+    check("AD-23", errCount() === 0 && q.hint === "count" && q.exact === true && q.partial.join() === "Xorazm", JSON.stringify(q.partial));
+    act("tab", '[data-i="pack"]'); act("discard"); $('[data-m="yes"]').click();
+    await until(() => $(".pack-rows"), 4000);
+    check("AD-24", !localStorage.getItem("uzquiz.admin.draft.klassik"), "draft discarded");
+  },
 };
 
 export async function run(name) {

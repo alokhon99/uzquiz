@@ -217,6 +217,7 @@ button { cursor: pointer; border: 0; background: none; touch-action: manipulatio
 .letters { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
 .letters i { width: 30px; height: 36px; border-radius: 9px; background: var(--card-strong); border: 1px solid var(--border); display: grid; place-items: center; font-style: normal; font-weight: 900; font-size: 15px; }
 .letters i.ok { background: rgba(34, 211, 154, 0.25); border-color: var(--success); animation: pop 0.35s; }
+.letters i.part { background: rgba(255, 196, 61, 0.22); border-color: var(--warning); animation: pop 0.35s; }
 .letters i.bad { background: rgba(255, 90, 110, 0.2); border-color: var(--danger); animation: pop 0.35s; }
 .letters i.first { background: color-mix(in srgb, var(--warning) 30%, transparent); border-color: var(--warning); }
 .letters i.gap { width: 10px; background: none; border: 0; }
@@ -229,6 +230,10 @@ button { cursor: pointer; border: 0; background: none; touch-action: manipulatio
 @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: none; opacity: 1; } }
 .feedback.ok { background: rgba(34, 211, 154, 0.14); border: 1px solid rgba(34, 211, 154, 0.5); }
 .feedback.bad { background: rgba(255, 90, 110, 0.14); border: 1px solid rgba(255, 90, 110, 0.5); }
+.feedback.part { background: rgba(255, 196, 61, 0.14); border: 1px solid rgba(255, 196, 61, 0.55); }
+.feedback .fb-note { font-size: 13.5px; color: var(--muted); }
+.feedback .claim-btn { border-style: dashed; }
+.small-note { font-size: 13px; margin: -6px 0 0; }
 .feedback .fb-title { display: flex; align-items: center; justify-content: space-between; font-size: 20px; font-weight: 900; }
 .feedback .pts { font-size: 16px; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.12); }
 .feedback .fb-answer { font-size: 15px; }

@@ -187,3 +187,29 @@ Not covered by automated tests (needs real devices / your account):
 - Real iPhone/Android media autoplay and hardware volume behaviour (tested in Chromium with real taps).
 - A real publish to GitHub with your token (publishing verified against a mocked GitHub API, incl. the exact commit tree).
 - Offline audio/video: in α only the app, pack files and images are cached offline; audio/video need a connection (offline download is planned for 2.1).
+
+---
+
+# Release 2.1 — typed answers, Rasminka
+
+## Iteration 1
+| Suite | Checks | Pass | Fail |
+|---|---|---|---|
+| Unit / content (incl. U-34…U-39) | 27 | 27 | 0 |
+| Game E2E: rasminka | 17 | 15 | 2 |
+| Game E2E regression: klassikFull, klassikRegress, timerOff, catalogue, media, audio, mediaFail, back, multi1/2, migrate1/2 | all | all | 0 |
+| Admin E2E (existing 9 suites + new `rules`) | 42 | 42 | 0 |
+
+Both failures were **test defects, not app bugs**:
+- V-72 expected "3 ta harf" for *Osh*. By the Uzbek alphabet rule, *sh* is one letter, so 2 is correct.
+- V-84 read the previous question's (stopped) timer before the new one started.
+
+Updated existing tests: U-05 now checks rounds 2–6 against the v1 bank (round 1 was intentionally replaced); klassikRegress runs its option-based checks in round 2.
+
+## Iteration 2 — full regression
+All suites pass. No new console errors; the only 404s are the intentional media-failure test.
+Also checked by eye at 375 × 812 and 320 × 568: picture + input + buttons fit, and the partial-answer card with the claim button and reveal picture renders correctly.
+
+✅ Exit criterion met: no open bugs.
+
+Known, by design: typo tolerance is 0 for answers of 4 letters or fewer, so "Xivva" for *Xiva* is rejected. The player can overrule it with "Men to'g'ri topgandim".
