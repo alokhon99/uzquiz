@@ -89,3 +89,50 @@ details.repo summary { cursor: pointer; font-size: 13px; color: var(--muted); fo
 a.btn { text-decoration: none; color: inherit; }
 a.btn:visited { color: inherit; }
 textarea { font: inherit; color: inherit; }
+
+/* ===== 2.0 paketlar muharriri ===== */
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+@media (max-width: 640px) { .grid3 { grid-template-columns: 1fr 1fr; } }
+.pack-rows { display: flex; flex-direction: column; gap: 10px; }
+.prow { display: flex; align-items: center; gap: 12px; text-align: left; width: 100%; padding: 12px 14px; }
+.prow-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.prow-body b { font-size: 16px; }
+.prow-body small { color: var(--muted); font-size: 12.5px; }
+.pill.st-published { color: #9FF0CF; border-color: rgba(34, 211, 154, 0.45); }
+.pill.st-draft { color: var(--muted); }
+.pill.st-review { color: #FFE19A; border-color: rgba(255, 197, 61, 0.45); }
+.pill.st-archived { color: #B9B3D9; opacity: 0.7; }
+@media (max-width: 640px) { .prow { flex-wrap: wrap; } .prow .pill { order: 3; } }
+.tab.add { border-style: dashed; color: var(--muted); }
+.add-q { display: flex; gap: 10px; flex-wrap: wrap; }
+.add-q .btn { width: auto; flex: 1; min-width: 140px; min-height: 48px; font-size: 15px; }
+.input.mini { min-height: 38px; width: auto; padding: 0 10px; font-size: 13.5px; }
+details.media-ed { border: 1px dashed var(--border); border-radius: 14px; padding: 10px 12px; }
+details.media-ed[open] { border-style: solid; background: rgba(0, 0, 0, 0.12); }
+details.media-ed summary { cursor: pointer; font-weight: 800; font-size: 14px; color: var(--muted); }
+.med { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+.seg { display: flex; gap: 6px; flex-wrap: wrap; }
+.seg-btn { min-height: 36px; padding: 0 14px; border-radius: 10px; background: var(--card); border: 1px solid var(--border); font-weight: 800; font-size: 13.5px; }
+.seg-btn.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.med-file { display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
+.med-prev { width: 160px; min-height: 60px; border-radius: 12px; overflow: hidden; background: rgba(0, 0, 0, 0.25); display: grid; place-items: center; }
+.med-prev img, .med-prev video { width: 100%; height: auto; display: block; }
+.med-prev audio { width: 160px; }
+.file-btn { width: auto; min-height: 44px; font-size: 14.5px; cursor: pointer; }
+.file-btn.busy { opacity: 0.6; pointer-events: none; }
+.file-btn.busy::after { content: " ⏳"; }
+fieldset.rights { border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px 12px; margin: 0; }
+fieldset.rights legend { font-size: 12.5px; font-weight: 800; color: var(--muted); padding: 0 6px; }
+.check.tf { flex: 1; min-height: 46px; padding: 0 12px; border-radius: 14px; border: 1.5px solid var(--border); background: var(--card); color: var(--text); font-weight: 800; }
+.check.tf:has(input:checked) { border-color: var(--success); background: rgba(34, 211, 154, 0.12); }
+.opt-row .icon-btn { width: 40px; height: 40px; flex: none; }
+.opt-row .icon-btn[disabled] { opacity: 0.3; }
+.st-list { display: flex; flex-direction: column; gap: 6px; }
+.check.st { color: var(--text); font-weight: 700; }
+.check.st input:disabled + * , .check.st:has(input:disabled) { opacity: 0.5; }
+.empty { text-align: center; color: var(--muted); padding: 30px; }
+/* BUG-19: raund amallari tor ekranda */
+@media (max-width: 640px) {
+  .round-card .btn-row { flex-wrap: wrap; }
+  .round-card .btn-row .btn-danger { flex-basis: 100%; }
+}

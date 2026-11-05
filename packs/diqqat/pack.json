@@ -1,0 +1,175 @@
+{
+  "schema": 2,
+  "id": "diqqat",
+  "title": "Diqqat sinovi",
+  "description": "Rasm va qisqa videolarni kuzating: sanang, eslab qoling va farqini toping. Ko'z va xotira uchun mashq!",
+  "category": "mantiq",
+  "cover": {
+    "type": "image",
+    "src": "media/muqova.svg",
+    "alt": "Katta ko'z belgisi",
+    "rights": {
+      "source": "Uzquiz jamoasi (o'zimiz chizgan)",
+      "licence": "own",
+      "holder": "Uzquiz"
+    }
+  },
+  "ageRating": "0+",
+  "status": "published",
+  "publishedAt": "2026-11-05",
+  "price": 0,
+  "settings": {
+    "speedBonus": true,
+    "showCorrect": true
+  },
+  "rounds": [
+    {
+      "title": "Rasmga qara",
+      "icon": "🖼️",
+      "color": "#7C5CFF",
+      "kind": "standard",
+      "timeLimit": 20,
+      "points": 10,
+      "description": "Rasmni diqqat bilan ko'ring va savolga javob bering.",
+      "questions": [
+        {
+          "type": "choice",
+          "text": "Rasmda nechta yulduz bor?",
+          "media": {
+            "type": "image",
+            "src": "media/yulduzlar.svg",
+            "alt": "To'q fonda tarqoq sariq yulduzlar",
+            "rights": {
+              "source": "Uzquiz jamoasi (o'zimiz chizgan)",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "options": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "answer": 2
+        },
+        {
+          "type": "choice",
+          "text": "Qaysi rangdagi doiralar ko'proq?",
+          "media": {
+            "type": "image",
+            "src": "media/doiralar.svg",
+            "alt": "Qizil va ko'k doiralar",
+            "rights": {
+              "source": "Uzquiz jamoasi (o'zimiz chizgan)",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "options": [
+            "Qizil",
+            "Ko'k",
+            "Teng"
+          ],
+          "answer": 0,
+          "fact": "6 ta qizil va 4 ta ko'k doira bor edi."
+        },
+        {
+          "type": "truefalse",
+          "text": "Soat 3:00 ni ko'rsatyaptimi?",
+          "media": {
+            "type": "image",
+            "src": "media/soat.svg",
+            "alt": "Mil ko'rsatkichli soat",
+            "rights": {
+              "source": "Uzquiz jamoasi (o'zimiz chizgan)",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "answer": true
+        }
+      ]
+    },
+    {
+      "title": "Videoni kuzat",
+      "icon": "🎬",
+      "color": "#FF4D8D",
+      "kind": "standard",
+      "timeLimit": 25,
+      "points": 15,
+      "description": "▶ tugmasini bosing va videoni oxirigacha kuzating. Taymer video boshlanganda ishga tushadi. Videoni bir marta qayta ko'rish mumkin.",
+      "questions": [
+        {
+          "type": "choice",
+          "text": "Ekrandan nechta to'p o'tdi?",
+          "media": {
+            "type": "video",
+            "src": "media/toplar.mp4",
+            "alt": "Rangli to'plar ekran bo'ylab chapdan o'ngga o'tadi",
+            "maxReplays": 1,
+            "rights": {
+              "source": "Uzquiz jamoasi (o'zimiz chizgan)",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "options": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "answer": 2
+        },
+        {
+          "type": "choice",
+          "text": "Oxirgi kvadrat qaysi rangda edi?",
+          "media": {
+            "type": "video",
+            "src": "media/ranglar.mp4",
+            "alt": "Turli joylarda rangli kvadratlar navbatma-navbat chiqadi",
+            "maxReplays": 1,
+            "rights": {
+              "source": "Uzquiz jamoasi (o'zimiz chizgan)",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "options": [
+            "Qizil",
+            "Ko'k",
+            "Yashil",
+            "Sariq"
+          ],
+          "answer": 3
+        },
+        {
+          "type": "choice",
+          "text": "Qaysi shakl ko'rinmadi?",
+          "media": {
+            "type": "video",
+            "src": "media/shakllar.mp4",
+            "alt": "Markazda shakllar birin-ketin paydo bo'ladi",
+            "maxReplays": 1,
+            "rights": {
+              "source": "Uzquiz jamoasi (o'zimiz chizgan)",
+              "licence": "own",
+              "holder": "Uzquiz"
+            },
+            "start": 0.3,
+            "end": 5.6
+          },
+          "options": [
+            "Doira",
+            "Uchburchak",
+            "Kvadrat",
+            "Yulduz"
+          ],
+          "answer": 3,
+          "fact": "Doira, uchburchak, kvadrat va romb ko'rsatildi — yulduz yo'q edi."
+        }
+      ]
+    }
+  ]
+}
