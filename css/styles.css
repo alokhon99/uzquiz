@@ -465,3 +465,9 @@ body:has(.preview-bar) .phone { padding-top: calc(var(--safe-top) + 46px); }
 /* BUG-18: tor ekranda sarlavha qatori */
 .cat-head small { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 @media (max-width: 360px) { .cat-head .icon-btn { width: 40px; height: 40px; } .cat-head h1 { font-size: 22px; } }
+
+/* 2.2: yozuv tanlash (lotin / kirill) */
+.setting .seg { display: flex; gap: 4px; padding: 3px; border-radius: 12px; background: var(--card); border: 1px solid var(--border); flex-shrink: 0; }
+.setting .seg-btn { min-height: 34px; padding: 0 12px; border-radius: 9px; font-weight: 800; font-size: 13.5px; color: var(--muted); background: none; border: 0; }
+.setting .seg-btn.on { background: var(--primary); color: #fff; }
+.script-btn { font-weight: 900; font-size: 14px; letter-spacing: -0.02em; }
