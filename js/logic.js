@@ -13,9 +13,103 @@ export function normalize(str) {
 
 /** Matnli javob to'g'rimi? */
 export function isTextCorrect(input, question) {
-  const n = normalize(input);
-  if (!n) return false;
-  return [question.answer, ...(question.alts || [])].some((a) => normalize(a) === n);
+  return checkText(input, question).verdict === "ok";
+}
+
+/* ---------- 2.1: yumshoq (inson kabi) javob tekshiruvi ---------- */
+
+// O'zbek (va rus) kirill harflari → lotin.
+const CYR = {
+  а: "a", б: "b", в: "v", г: "g", ғ: "g'", д: "d", е: "e", ё: "yo", ж: "j", з: "z", и: "i", й: "y", к: "k", қ: "q",
+  л: "l", м: "m", н: "n", о: "o", ў: "o'", п: "p", р: "r", с: "s", т: "t", у: "u", ф: "f", х: "x", ҳ: "h", ц: "ts",
+  ч: "ch", ш: "sh", щ: "sh", ъ: "'", ь: "", ы: "i", э: "e", ю: "yu", я: "ya",
+};
+
+/** Kirill yozuvini lotinga o'giradi (lotin matn o'zgarmaydi). */
+export function toLatin(str) {
+  return String(str ?? "").toLocaleLowerCase("uz").replace(/[а-яёўқғҳ]/g, (c) => CYR[c] ?? c);
+}
+
+/** Solishtirish kaliti: yozuv, katta-kichik harf, tutuq belgisi, nuqta va boshqa belgilar ahamiyatsiz. */
+export function looseKey(str) {
+  return toLatin(normalize(str))
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .replace(/'/g, "")
+    .replace(/kh/g, "x")
+    .replace(/(?<![sc])h/g, "x") // Xiva / Hiva — ko'pchilik x va h ni almashtirib yozadi
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+/** Damerau–Levenshtein masofasi (qo'shni harflar o'rni almashishi ham 1 xato). */
+export function editDistance(a, b) {
+  const m = a.length, n = b.length;
+  const d = Array.from({ length: m + 1 }, (_, i) => [i, ...Array(n).fill(0)]);
+  for (let j = 1; j <= n; j++) d[0][j] = j;
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+    }
+  }
+  return d[m][n];
+}
+
+/** Nechta imlo xatosiga ruxsat: qisqa so'zlar va raqamlar aniq yozilishi kerak. */
+export function typoAllowance(key) {
+  const len = key.replace(/ /g, "").length;
+  if (/\d/.test(key) || len <= 4) return 0;
+  return len <= 7 ? 1 : 2;
+}
+
+function sameish(inputKey, targetKey, fuzzy) {
+  if (!targetKey) return null;
+  const a = inputKey.replace(/ /g, ""), b = targetKey.replace(/ /g, "");
+  if (a === b) return "exact";
+  if (fuzzy && editDistance(a, b) <= typoAllowance(targetKey)) return "typo";
+  return null;
+}
+
+function containsWords(inputKey, kwKey, fuzzy) {
+  const words = inputKey.split(" "), kw = kwKey.split(" ").filter(Boolean);
+  if (!kw.length) return false;
+  for (let i = 0; i + kw.length <= words.length; i++) {
+    if (kw.every((w, j) => sameish(words[i + j], w, fuzzy))) return true;
+  }
+  return false;
+}
+
+/**
+ * Yozma javobni inson-hakam kabi tekshiradi.
+ * Natija: { verdict: "ok" | "partial" | "no", how: "exact" | "typo" | "keyword" | "partial" | null }
+ * Savol maydonlari: answer, alts[], keywords[] (javobda shu so'z bo'lsa — to'liq ochko),
+ * partial[] (yarim ochko), exact: true (imlo xatosiga ruxsat yo'q).
+ */
+export function checkText(input, q) {
+  const k = looseKey(input);
+  if (!k) return { verdict: "no", how: null };
+  const fuzzy = !q.exact;
+  for (const a of [q.answer, ...(q.alts || [])]) {
+    const how = sameish(k, looseKey(a), fuzzy);
+    if (how) return { verdict: "ok", how };
+  }
+  for (const kw of q.keywords || []) {
+    if (containsWords(k, looseKey(kw), fuzzy)) return { verdict: "ok", how: "keyword" };
+  }
+  for (const p of q.partial || []) {
+    const pk = looseKey(p);
+    if (sameish(k, pk, fuzzy) || containsWords(k, pk, fuzzy)) return { verdict: "partial", how: "partial" };
+  }
+  return { verdict: "no", how: null };
+}
+
+/** Javobni so'zlarga va o'zbek harflariga ajratish (harf kataklari uchun). */
+export function answerWords(answer) {
+  return normalize(answer)
+    .split(" ")
+    .map((w) => uzLetters(w.replace(/[^\p{L}\p{N}']/gu, "").replace(/^'+|'+$/g, "")))
+    .filter((w) => w.length);
 }
 
 /** O'zbek lotin harflarini (o', g', sh, ch, ng) hisobga olgan holda so'zni harflarga ajratish. */

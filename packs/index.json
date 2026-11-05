@@ -31,7 +31,7 @@
     {
       "id": "klassik",
       "title": "Uzquiz Klassik",
-      "description": "Asl Uzquiz o'yini: rasmli savollar, bilimdonlar bellashuvi, so'z zanjiri, kino, musiqa va yashirin mavzu — 6 raund, 42 savol.",
+      "description": "Asl Uzquiz o'yini: «Rasminka» rasmli topishmoqlari, bilimdonlar bellashuvi, so'z zanjiri, kino, musiqa va yashirin mavzu — 6 raund, 42 savol.",
       "category": "umumiy",
       "cover": {
         "type": "emoji",
@@ -46,7 +46,7 @@
       "mediaTypes": [
         "image"
       ],
-      "estMinutes": 15
+      "estMinutes": 17
     },
     {
       "id": "tovushlar",

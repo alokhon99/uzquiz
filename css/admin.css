@@ -136,3 +136,10 @@ fieldset.rights legend { font-size: 12.5px; font-weight: 800; color: var(--muted
   .round-card .btn-row { flex-wrap: wrap; }
   .round-card .btn-row .btn-danger { flex-basis: 100%; }
 }
+
+/* 2.1: javob tekshirish qoidalari */
+.ans-ed .small { font-size: 12.5px; margin: 4px 0 8px; }
+.try-out { font-size: 13.5px; min-height: 1.2em; margin-top: 6px; }
+.try-out.ok { color: var(--success); }
+.try-out.partial { color: var(--warning); }
+.try-out.no { color: var(--danger); }

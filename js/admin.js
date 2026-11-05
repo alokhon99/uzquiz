@@ -198,6 +198,7 @@ function packPanel(p) {
       <div class="grid2" style="margin-top:12px">
         <label class="check"><input type="checkbox" data-path="settings.speedBonus" data-kind="bool" ${p.settings?.speedBonus !== false ? "checked" : ""} /> Tezlik bonusi (+5 gacha)</label>
         <label class="check"><input type="checkbox" data-path="settings.showCorrect" data-kind="bool" ${p.settings?.showCorrect !== false ? "checked" : ""} /> Xato javobdan keyin to'g'ri javobni ko'rsatish</label>
+        <label class="check"><input type="checkbox" data-path="settings.selfJudge" data-kind="bool" ${p.settings?.selfJudge !== false ? "checked" : ""} /> O'yinchi yozma javobini o'zi baholay oladi («Men to'g'ri topgandim»)</label>
       </div>
       <div class="msgs" id="msgs-pack" style="margin-top:12px"></div>
     </section>
@@ -274,7 +275,21 @@ function questionCard(r, ri, q, qi) {
   } else {
     answer = `<div class="grid2">
       <label class="f"><span>To'g'ri javob</span><input class="input" data-path="${base}.answer" value="${esc(q.answer)}" /></label>
-      <label class="f"><span>Muqobil javoblar (vergul bilan)</span><input class="input" data-path="${base}.alts" data-kind="list" value="${esc((q.alts || []).join(", "))}" /></label></div>`;
+      <label class="f"><span>Muqobil javoblar (vergul bilan)</span><input class="input" data-path="${base}.alts" data-kind="list" value="${esc((q.alts || []).join(", "))}" placeholder="US Polo, Ю.С. Поло" /></label></div>
+    <details class="media-ed ans-ed" ${q.keywords || q.partial || q.hint || q.exact ? "open" : ""}><summary>🧑‍⚖️ Javobni tekshirish qoidalari</summary>
+      <div class="grid2">
+        <label class="f"><span>Kalit so'zlar — javobda bo'lsa, to'liq ochko</span><input class="input" data-path="${base}.keywords" data-kind="list" value="${esc((q.keywords || []).join(", "))}" placeholder="masalan: polo" /></label>
+        <label class="f"><span>Qisman to'g'ri — yarim ochko</span><input class="input" data-path="${base}.partial" data-kind="list" value="${esc((q.partial || []).join(", "))}" placeholder="masalan: Xorazm" /></label>
+      </div>
+      <div class="grid2">
+        ${r.kind === "chain" ? "" : `<label class="f"><span>O'yinchiga ishora</span><select class="input" data-path="${base}.hint">
+          ${[["letters", "Birinchi harf + harflar soni"], ["count", "Faqat harflar soni"], ["none", "Ishorasiz"]].map(([k, t]) => `<option value="${k}" ${(q.hint || "letters") === k ? "selected" : ""}>${t}</option>`).join("")}</select></label>`}
+        <label class="check"><input type="checkbox" data-path="${base}.exact" data-kind="bool" ${q.exact ? "checked" : ""} /> Aniq yozilishi shart (imlo xatosi qabul qilinmaydi)</label>
+      </div>
+      <p class="muted small">Katta-kichik harf, nuqta, tutuq belgisi, kirill/lotin yozuvi va x/h farqi avtomatik e'tiborsiz qoldiriladi. 5 harfdan uzun javoblarda kichik imlo xatosi kechiriladi.</p>
+      <label class="f"><span>🧪 Sinab ko'ring: o'yinchi nima yozishi mumkin?</span><input class="input try-ans" data-try="${ri}.${qi}" placeholder="Javob yozing…" /></label>
+      <div class="try-out" id="try-${ri}-${qi}"></div>
+    </details>`;
   }
   const typeSel = r.kind === "chain" || q.final ? "" : `<select class="input mini" data-act-change="qtype" data-path="${base}.type" aria-label="Savol turi">${Object.entries(P.Q_TYPES).map(([k, t]) => `<option value="${k}" ${q.type === k ? "selected" : ""}>${t}</option>`).join("")}</select>`;
   return `
@@ -418,6 +433,18 @@ function onEdit(e) {
   refresh();
 }
 root.addEventListener("input", onEdit);
+root.addEventListener("input", (e) => { if (e.target.dataset.try) tryAnswer(e.target); });
+function tryAnswer(el) {
+  const [ri, qi] = el.dataset.try.split(".").map(Number);
+  const q = draft?.pack.rounds[ri]?.questions[qi];
+  const out = document.getElementById(`try-${ri}-${qi}`);
+  if (!q || !out) return;
+  if (!el.value.trim()) { out.textContent = ""; out.className = "try-out"; return; }
+  const r = L.checkText(el.value, q);
+  const txt = { exact: "✅ To'g'ri", typo: "✅ To'g'ri (imlo xatosi kechirildi)", keyword: "✅ To'g'ri (kalit so'z bo'yicha)", partial: "🤏 Qisman to'g'ri — yarim ochko" }[r.how] || "❌ Qabul qilinmaydi — o'yinchi «Men to'g'ri topgandim» tugmasi bilan e'tiroz bildirishi mumkin";
+  out.textContent = txt;
+  out.className = `try-out ${r.verdict}`;
+}
 root.addEventListener("change", (e) => {
   if (e.target.dataset.upload) return onUpload(e.target);
   if (e.target.tagName === "SELECT" || e.target.type === "radio" || e.target.type === "checkbox") onEdit(e);
