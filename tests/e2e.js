@@ -31,8 +31,29 @@ async function home() {
   if (!(await until(() => $("#pack-list"), 4000))) throw new Error("catalogue did not render");
 }
 async function openPack(id) { await home(); click(`#pack-list [data-id="${id}"]`); await until(() => U().pack && U().pack.id === id && $(".detail-hero")); }
-async function startPack(id, name = "Sinovchi") {
+// Rasminka testlari jamoa nashr qiladigan savollarga bog'liq bo'lmasin: xotirada sinov raundi qo'yiladi.
+const FIXTURE = [
+  { type: "text", text: "Bu qaysi milliy taom?", answer: "Osh", alts: ["Palov", "Plov"], keywords: ["palov"], hint: "count" },
+  { type: "text", text: "Bu bosh kiyim qanday ataladi?", answer: "Do'ppi", alts: ["Chust do'ppi"], keywords: ["do'ppi"], hint: "letters" },
+  { type: "text", text: "«Oq oltin» deb ataladigan o'simlik?", answer: "Paxta", hint: "count" },
+  { type: "text", text: "Kalta Minor qaysi shaharda?", answer: "Xiva", alts: ["Khiva"], partial: ["Xorazm"], hint: "none", withReveal: true },
+  { type: "text", text: "Rasadxona qaysi olimniki?", answer: "Ulug'bek", alts: ["Mirzo Ulug'bek"], partial: ["Samarqand"], hint: "letters" },
+  { type: "text", text: "Olma kimning kashfiyotiga ishora?", answer: "Nyuton", alts: ["Newton"], partial: ["Tortishish"], hint: "count" },
+  { type: "text", text: "Uch madrasa turgan maydon?", answer: "Registon", partial: ["Samarqand"], hint: "letters" },
+];
+let restoreRound = null;
+function useFixture() {
+  const r = U().pack.rounds[0];
+  if (restoreRound) return;
+  const orig = r.questions;
+  const imgs = orig.map((q) => q.media).filter((m) => m && m.type === "image");
+  const reveal = orig.map((q) => q.reveal).find((m) => m && m.type === "image");
+  r.questions = FIXTURE.map(({ withReveal, ...q }, i) => ({ ...q, media: imgs[i % imgs.length], ...(withReveal && reveal ? { reveal } : {}) }));
+  restoreRound = () => { r.questions = orig; restoreRound = null; };
+}
+async function startPack(id, name = "Sinovchi", { fixture = false } = {}) {
   await openPack(id);
+  if (fixture) useFixture();
   $("#name").value = name;
   act("start");
   if ($(".modal")) click('[data-modal-act="0"]');
@@ -367,7 +388,7 @@ const suites = {
   // 2.1: Rasminka — rasmli topishmoqlar, yozma javob, yumshoq tekshiruv, o'zi baholash
   async rasminka() {
     localStorage.removeItem("uzquiz.game.klassik");
-    await startPack("klassik", "Rasmin");
+    await startPack("klassik", "Rasmin", { fixture: true });
     check("V-70", has("Rasminka") && has("Raund 1 / 6"), "intro");
     act("beginRound");
     const type = (v) => { $("#answer").value = v; $("#text-form").requestSubmit(); };
@@ -439,7 +460,7 @@ const suites = {
     check("C-03", $$("#pack-list .pack-card").length === 1 && $('#pack-list [data-id="tovushlar"]'), "Cyrillic search");
     s.value = ""; s.dispatchEvent(new Event("input", { bubbles: true }));
     await until(() => $$("#pack-list .pack-card").length === 3);
-    await startPack("klassik", "Дилноза");
+    await startPack("klassik", "Дилноза", { fixture: true });
     check("C-04", has("Расминка") && has("Раунд 1 / 6") && !latinLeft(txt()).length, latinLeft(txt()).join(" "));
     act("beginRound");
     await until(() => $("#text-form"));
@@ -494,6 +515,7 @@ export async function run(name) {
   out = [];
   trap();
   try { await suites[name](); } catch (e) { out.push({ id: name, ok: false, detail: "EXCEPTION: " + e.message + " " + (e.stack || "").split("\n")[1] }); }
+  if (restoreRound) restoreRound();
   out.push({ id: "errors", ok: errors.length === 0, detail: errors.join(" | ") });
   return out.map((r) => `${r.ok ? "PASS" : "FAIL"} ${r.id}${r.detail ? " — " + r.detail : ""}`).join("\n");
 }

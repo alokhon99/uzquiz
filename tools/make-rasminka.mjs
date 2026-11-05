@@ -3,6 +3,11 @@
 // Ishga tushirish: node tools/make-rasminka.mjs
 import { writeFileSync, readFileSync, mkdirSync, existsSync, unlinkSync } from "node:fs";
 
+if (!process.argv.includes("--force")) {
+  console.error("Diqqat: bu skript Klassik paketining 1-raundini demo savollar bilan ALMASHTIRADI.\n" +
+    "Jamoa muharrirda nashr qilgan savollar o'chib ketadi. Rostdan ham kerak bo'lsa: node tools/make-rasminka.mjs --force");
+  process.exit(1);
+}
 const DIR = new URL("../app/packs/klassik/", import.meta.url);
 const MEDIA = new URL("media/", DIR);
 mkdirSync(MEDIA, { recursive: true });

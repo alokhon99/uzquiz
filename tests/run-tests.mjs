@@ -117,7 +117,7 @@ tc("U-37", "key words and partial answers", () => {
 });
 tc("U-38", "validator: bad lists, unknown hint, partial that is really correct, short key word", () => {
   const base = deep(klassik), q = base.rounds[0].questions[0];
-  q.hint = "maybe"; q.partial = ["osh"]; q.keywords = ["os"];
+  q.type = "text"; q.hint = "maybe"; q.partial = [q.answer]; q.keywords = ["os"];
   const v = P.validatePack(base);
   ok(v.errors.some((e) => e.msg.includes("Ishora")), "hint");
   ok(v.errors.some((e) => e.msg.includes("qisman javob bo'la olmaydi")), "partial==answer");
