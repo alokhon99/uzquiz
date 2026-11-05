@@ -1,0 +1,72 @@
+{
+  "schema": 2,
+  "packs": [
+    {
+      "id": "diqqat",
+      "title": "Diqqat sinovi",
+      "description": "Rasm va qisqa videolarni kuzating: sanang, eslab qoling va farqini toping. Ko'z va xotira uchun mashq!",
+      "category": "mantiq",
+      "cover": {
+        "type": "image",
+        "src": "media/muqova.svg",
+        "alt": "Katta ko'z belgisi",
+        "rights": {
+          "source": "Uzquiz jamoasi (o'zimiz chizgan)",
+          "licence": "own",
+          "holder": "Uzquiz"
+        }
+      },
+      "ageRating": "0+",
+      "status": "published",
+      "publishedAt": "2026-11-05",
+      "price": 0,
+      "questionCount": 6,
+      "roundCount": 2,
+      "mediaTypes": [
+        "image",
+        "video"
+      ],
+      "estMinutes": 2
+    },
+    {
+      "id": "klassik",
+      "title": "Uzquiz Klassik",
+      "description": "Asl Uzquiz o'yini: rasmli savollar, bilimdonlar bellashuvi, so'z zanjiri, kino, musiqa va yashirin mavzu — 6 raund, 42 savol.",
+      "category": "umumiy",
+      "cover": {
+        "type": "emoji",
+        "value": "🇺🇿"
+      },
+      "ageRating": "6+",
+      "status": "published",
+      "publishedAt": "2026-11-04",
+      "price": 0,
+      "questionCount": 42,
+      "roundCount": 6,
+      "mediaTypes": [
+        "image"
+      ],
+      "estMinutes": 15
+    },
+    {
+      "id": "tovushlar",
+      "title": "Tovushlar va ritm",
+      "description": "Quloqlaringizni sinang! Zarbalarni sanang, ohang qayerga ketayotganini toping va notalarni solishtiring. Barcha savollar — tovushli.",
+      "category": "musiqa",
+      "cover": {
+        "type": "emoji",
+        "value": "🥁"
+      },
+      "ageRating": "0+",
+      "status": "published",
+      "publishedAt": "2026-11-05",
+      "price": 0,
+      "questionCount": 9,
+      "roundCount": 2,
+      "mediaTypes": [
+        "audio"
+      ],
+      "estMinutes": 3
+    }
+  ]
+}

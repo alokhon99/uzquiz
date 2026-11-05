@@ -1,0 +1,224 @@
+{
+  "schema": 2,
+  "id": "tovushlar",
+  "title": "Tovushlar va ritm",
+  "description": "Quloqlaringizni sinang! Zarbalarni sanang, ohang qayerga ketayotganini toping va notalarni solishtiring. Barcha savollar — tovushli.",
+  "category": "musiqa",
+  "cover": {
+    "type": "emoji",
+    "value": "🥁"
+  },
+  "ageRating": "0+",
+  "status": "published",
+  "publishedAt": "2026-11-05",
+  "price": 0,
+  "settings": {
+    "speedBonus": true,
+    "showCorrect": true
+  },
+  "rounds": [
+    {
+      "title": "Ritmni sana",
+      "icon": "🥁",
+      "color": "#FF8A3D",
+      "kind": "standard",
+      "timeLimit": 20,
+      "points": 10,
+      "description": "▶ tugmasini bosing va zarbalarni diqqat bilan tinglang. Taymer tovush boshlanganda ishga tushadi.",
+      "questions": [
+        {
+          "type": "choice",
+          "text": "Nechta zarba eshitdingiz?",
+          "media": {
+            "type": "audio",
+            "src": "media/ritm-4.wav",
+            "alt": "Tovush",
+            "maxReplays": 1,
+            "rights": {
+              "source": "Uzquiz jamoasi (sintez qilingan)",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "options": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "answer": 1
+        },
+        {
+          "type": "choice",
+          "text": "Bu safar-chi? Nechta zarba?",
+          "media": {
+            "type": "audio",
+            "src": "media/ritm-6.wav",
+            "alt": "Tovush",
+            "maxReplays": 1,
+            "rights": {
+              "source": "Uzquiz jamoasi (sintez qilingan)",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "options": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "answer": 1,
+          "fact": "Tez ritmda zarbalarni sanash qiyinroq — miyamiz ularni guruhlab qabul qiladi."
+        },
+        {
+          "type": "truefalse",
+          "text": "Ikkinchi qismda zarbalar birinchisiga qaraganda tezroqmi?",
+          "media": {
+            "type": "audio",
+            "src": "media/ritm-tezlashadi.wav",
+            "alt": "Tovush",
+            "maxReplays": 1,
+            "rights": {
+              "source": "Uzquiz jamoasi (sintez qilingan)",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "answer": true
+        },
+        {
+          "type": "truefalse",
+          "text": "Zarbalar soni juft sonmi?",
+          "media": {
+            "type": "audio",
+            "src": "media/ritm-7.wav",
+            "alt": "Tovush",
+            "maxReplays": 1,
+            "rights": {
+              "source": "Uzquiz jamoasi (sintez qilingan)",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "answer": false,
+          "fact": "7 ta zarba bor edi — bu toq son."
+        }
+      ]
+    },
+    {
+      "title": "Ohang sirlari",
+      "icon": "🎼",
+      "color": "#3DA9FF",
+      "kind": "standard",
+      "timeLimit": 25,
+      "points": 10,
+      "description": "Notalar balandligini solishtiring: ohang ko'tariladimi, pasayadimi yoki bir xil qoladimi?",
+      "questions": [
+        {
+          "type": "choice",
+          "text": "Ohang ko'tariladimi yoki pasayadimi?",
+          "media": {
+            "type": "audio",
+            "src": "media/ohang-kotariladi.wav",
+            "alt": "Tovush",
+            "maxReplays": 1,
+            "rights": {
+              "source": "Uzquiz jamoasi (sintez qilingan)",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "options": [
+            "Ko'tariladi",
+            "Pasayadi",
+            "Bir xil qoladi"
+          ],
+          "answer": 0,
+          "fact": "Bu do-re-mi-fa-sol — gamma bo'ylab yuqoriga harakat."
+        },
+        {
+          "type": "choice",
+          "text": "Bu ohang qaysi tomonga harakatlanadi?",
+          "media": {
+            "type": "audio",
+            "src": "media/ohang-pasayadi.wav",
+            "alt": "Tovush",
+            "maxReplays": 1,
+            "rights": {
+              "source": "Uzquiz jamoasi (sintez qilingan)",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "options": [
+            "Ko'tariladi",
+            "Pasayadi",
+            "Bir xil qoladi"
+          ],
+          "answer": 1
+        },
+        {
+          "type": "choice",
+          "text": "Qaysi nota balandroq?",
+          "media": {
+            "type": "audio",
+            "src": "media/ikki-nota.wav",
+            "alt": "Tovush",
+            "maxReplays": 1,
+            "rights": {
+              "source": "Uzquiz jamoasi (sintez qilingan)",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "options": [
+            "Birinchisi",
+            "Ikkinchisi",
+            "Ikkalasi bir xil"
+          ],
+          "answer": 1,
+          "fact": "Birinchisi «do», ikkinchisi «lya» — lya balandroq."
+        },
+        {
+          "type": "truefalse",
+          "text": "Ikkala tovush bir xil balandlikdami?",
+          "media": {
+            "type": "audio",
+            "src": "media/bir-xil.wav",
+            "alt": "Tovush",
+            "maxReplays": 1,
+            "rights": {
+              "source": "Uzquiz jamoasi (sintez qilingan)",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "answer": true
+        },
+        {
+          "type": "choice",
+          "text": "Ohangda nechta nota bor?",
+          "media": {
+            "type": "audio",
+            "src": "media/olti-nota.wav",
+            "alt": "Tovush",
+            "maxReplays": 2,
+            "rights": {
+              "source": "Uzquiz jamoasi (sintez qilingan)",
+              "licence": "own",
+              "holder": "Uzquiz"
+            }
+          },
+          "options": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ],
+          "answer": 2
+        }
+      ]
+    }
+  ]
+}

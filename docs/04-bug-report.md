@@ -114,3 +114,76 @@ Bugs found and fixed during this release:
 
 Test defect: AD-02 expected 1 error after breaking the word chain; changing one answer correctly breaks two links (Q3 and Q4) → expectation updated to 2.
 Not tested: a real publish to GitHub (needs your token); the publish code was verified against a mocked GitHub API.
+
+---
+
+# Release 2.0-α — Packs & media (2026-11-05)
+
+Scope tested: catalogue, pack page, flexible packs, image/audio/video questions, per-pack progress, v1 → v2 migration, multi-pack admin with media upload and GitHub publishing (mocked). Scenarios: `08-test-scenarios-v2.md`.
+
+**Architecture note for α:** all packs are free, so packs and media are static files on GitHub Pages. Accounts, payments and server-side protection of paid packs (Epics 4–6) need the backend planned for 2.0-β.
+
+## Iteration 1
+| Suite | Checks | Pass | Fail |
+|---|---|---|---|
+| Unit / content (`run-tests.mjs`) | 21 | 21 | 0 |
+| Game E2E (`e2e.js`, 17 suites) | — | all others | V-29 (TD-04), `migrate2` (TD-05), `corrupt2` (TD-06), then `corrupt2` / `timerOff` / `klassikRegress` could not start (BUG-16), V-60 (BUG-17) |
+| Admin E2E (`admin-e2e.js`, 10 suites) | 37 | 36 | 1 (AD-11, TD-07) |
+| Manual / visual (375 × 812, 320 × 568, real taps on video and audio) | — | — | 3 bugs |
+
+### Bugs found
+| ID | Severity | Title | Steps | Expected | Actual | Fix |
+|---|---|---|---|---|---|---|
+| BUG-14 | Minor | Timer chips wrap to two lines on video/audio questions | Open a video question at 375 px | One line | "⏸ ▶ bosilganda boshlanadi" and streak chip wrap, pushing content down | Shorter "▶ bosing" chip, nowrap chips |
+| BUG-15 | Minor | Ended video shows the big ▶ next to "Qayta"; with no replays left ▶ stays visible but does nothing | Play a video to the end, then again | Only "Qayta (n)" while replays remain; nothing playable when exhausted | Two play controls; dead ▶ | Hide overlay after end; disable play when no replays left |
+| BUG-16 | **Critical** | A corrupted saved game freezes the catalogue | Put unreadable JSON in `uzquiz.game.<pack>` and open the app | Catalogue loads, bad save ignored | Endless "Yuklanmoqda…", `TypeError: reading 'round'` — app unusable until storage is cleared | Validate saves before listing; delete invalid saves; safety net shows "Qayta urinish" instead of hanging |
+| BUG-17 | **Major** | On 320 × 568 phones the last answer of media questions is below the screen | Diqqat pack, video round, 320 × 568 | All options visible while the timer runs | Last option at 637 px (screen 568) | Compact media/option sizes ≤ 620 px high; waiting chip hidden there |
+| BUG-18 | Minor | Catalogue header subtitle wraps at 320 px | Open catalogue at 320 px | One line | "Savollar paketlari" breaks under the title | Ellipsis, smaller header buttons < 360 px |
+
+### Test defects (fixed in tests, app was correct)
+| ID | Description |
+|---|---|
+| TD-04 | V-29 checked the preload before the request finished — now waits for the network entry (the network log confirms the next question's media is fetched in advance) |
+| TD-05 | Suites tapped header buttons before the asynchronously rendered catalogue appeared |
+| TD-06 | `home()` helper looked for a "home" button on the initial loading screen |
+| TD-07 | AD-11 edited a round field while the editor showed the "Paket" tab after publishing |
+
+## Iteration 2 — build with BUG-14…18 fixed
+| Suite | Checks | Pass | Fail |
+|---|---|---|---|
+| Unit / content | 21 | 21 | 0 |
+| Game E2E (all 17 suites, fresh storage, incl. reload suites) | 97 | 97 | 0 |
+| Game E2E `small` @ 320 × 568 | 3 | 3 | 0 |
+| Admin E2E | 37 | 37 | 0 |
+| Console between ITER2 markers | — | 0 uncaught errors (4 expected 404s from the deliberate missing-file and new-pack tests) | — |
+
+BUG-14…BUG-18 → **Verified fixed / Closed**.
+
+New bug from exploratory testing:
+| ID | Severity | Title | Fix |
+|---|---|---|---|
+| BUG-19 | Minor | Editor on a phone: "Raundni o'chirish" clipped in a row of three buttons | Delete button gets its own row ≤ 640 px |
+
+Also: the editor no longer requests `pack.json` for brand-new packs that aren't on the site (removes an expected-but-noisy 404).
+
+## Iteration 3 — full regression
+| Suite | Checks | Pass | Fail |
+|---|---|---|---|
+| Unit / content | 21 | 21 | 0 |
+| Admin E2E | 37 | 37 | 0 |
+| Game E2E (catalogue, Klassik full game, media, audio, back button, offline, timer off, 1.x regression) | 75 | 75 | 0 |
+| Console between ITER3 markers | — | 0 messages | — |
+
+BUG-19 → **Verified fixed / Closed**. ✅ Exit criterion met: iteration 3 found no bugs.
+
+## 2.0-α status
+| Severity | Found | Fixed | Open |
+|---|---|---|---|
+| Critical | 1 | 1 | 0 |
+| Major | 1 | 1 | 0 |
+| Minor | 4 | 4 | 0 |
+
+Not covered by automated tests (needs real devices / your account):
+- Real iPhone/Android media autoplay and hardware volume behaviour (tested in Chromium with real taps).
+- A real publish to GitHub with your token (publishing verified against a mocked GitHub API, incl. the exact commit tree).
+- Offline audio/video: in α only the app, pack files and images are cached offline; audio/video need a connection (offline download is planned for 2.1).

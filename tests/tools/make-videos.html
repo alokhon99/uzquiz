@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head><meta charset="utf-8" /><title>Uzquiz — demo video generator</title></head>
+<body style="background:#111;color:#eee;font-family:system-ui">
+<h1>Demo video generator (dev only)</h1>
+<p>Records original canvas animations for the «Diqqat sinovi» pack and uploads them to tests/_uploads/.</p>
+<canvas id="c" width="640" height="360" style="width:640px;border:1px solid #444"></canvas>
+<pre id="log"></pre>
+<script type="module">
+const c = document.getElementById("c"), ctx = c.getContext("2d");
+const log = (t) => (document.getElementById("log").textContent += t + "\n");
+const W = 640, H = 360, BG = "#1C1442";
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+function pickType() {
+  for (const t of ["video/mp4;codecs=avc1.42E01E", "video/mp4;codecs=avc1", "video/mp4", "video/webm;codecs=vp9", "video/webm;codecs=vp8", "video/webm"])
+    if (MediaRecorder.isTypeSupported(t)) return t;
+  return "";
+}
+
+async function record(name, seconds, draw) {
+  const type = pickType();
+  const stream = c.captureStream(30);
+  const rec = new MediaRecorder(stream, { mimeType: type, videoBitsPerSecond: 900_000 });
+  const chunks = [];
+  rec.ondataavailable = (e) => e.data.size && chunks.push(e.data);
+  const done = new Promise((r) => (rec.onstop = r));
+  rec.start(200);
+  const t0 = performance.now();
+  await new Promise((resolve) => {
+    (function frame() {
+      const t = (performance.now() - t0) / 1000;
+      ctx.fillStyle = BG; ctx.fillRect(0, 0, W, H);
+      draw(t);
+      if (t < seconds) requestAnimationFrame(frame); else resolve();
+    })();
+  });
+  rec.stop();
+  await done;
+  const ext = type.startsWith("video/mp4") ? "mp4" : "webm";
+  const blob = new Blob(chunks, { type: type.split(";")[0] });
+  const file = `${name}.${ext}`;
+  const res = await fetch(`/__upload/${file}`, { method: "POST", body: blob }).then((r) => r.json());
+  log(`${file}: ${(blob.size / 1024).toFixed(0)} KB (${type}) → ${res.ok ? "saved" : "FAILED"}`);
+  return file;
+}
+
+function label(text) { ctx.fillStyle = "rgba(255,255,255,.5)"; ctx.font = "bold 20px system-ui"; ctx.fillText(text, 20, 34); }
+
+// 1) Balls crossing the screen: 5 balls at different times/heights
+const balls = [[0.4, 90, "#FF4D8D"], [1.3, 200, "#3DA9FF"], [2.0, 140, "#FFC53D"], [3.1, 260, "#22D39A"], [3.9, 110, "#7C5CFF"]];
+async function v1() {
+  return record("toplar", 6.5, (t) => {
+    label("Uzquiz · Diqqat sinovi");
+    for (const [st, y, col] of balls) {
+      const x = -40 + (t - st) * 380;
+      if (x > -40 && x < W + 40) { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, 26, 0, Math.PI * 2); ctx.fill(); }
+    }
+  });
+}
+// 2) Flashing coloured squares; last one is yellow
+const seq = [["#FF4D4D", "Q"], ["#3DA9FF", "K"], ["#22D39A", "Y"], ["#FF4D4D", "Q"], ["#FFC53D", "S"]];
+async function v2() {
+  return record("ranglar", 6.2, (t) => {
+    label("Uzquiz · Diqqat sinovi");
+    const i = Math.floor((t - 0.5) / 1.0);
+    const phase = (t - 0.5) % 1.0;
+    if (i >= 0 && i < seq.length && phase < 0.7) {
+      const pos = [[120, 120], [400, 90], [260, 200], [460, 220], [180, 230]][i];
+      ctx.fillStyle = seq[i][0]; ctx.fillRect(pos[0], pos[1], 110, 110);
+    }
+  });
+}
+// 3) Shapes appear one by one: circle, triangle, square, diamond (no star)
+async function v3() {
+  const shapes = ["circle", "triangle", "square", "diamond"];
+  return record("shakllar", 6.0, (t) => {
+    label("Uzquiz · Diqqat sinovi");
+    const i = Math.floor((t - 0.5) / 1.2);
+    if (i < 0 || i >= shapes.length || (t - 0.5) % 1.2 > 0.9) return;
+    ctx.fillStyle = ["#FF8A3D", "#22D39A", "#3DA9FF", "#FF4D8D"][i];
+    const cx = 320, cy = 190, s = 80;
+    ctx.beginPath();
+    if (shapes[i] === "circle") ctx.arc(cx, cy, s, 0, Math.PI * 2);
+    if (shapes[i] === "triangle") { ctx.moveTo(cx, cy - s); ctx.lineTo(cx + s, cy + s * 0.8); ctx.lineTo(cx - s, cy + s * 0.8); }
+    if (shapes[i] === "square") ctx.rect(cx - s, cy - s, s * 2, s * 2);
+    if (shapes[i] === "diamond") { ctx.moveTo(cx, cy - s); ctx.lineTo(cx + s, cy); ctx.lineTo(cx, cy + s); ctx.lineTo(cx - s, cy); }
+    ctx.closePath(); ctx.fill();
+  });
+}
+window.makeAll = async () => { const files = [await v1(), await v2(), await v3()]; log("DONE " + files.join(",")); return files; };
+log("ready — call makeAll()");
+</script>
+</body>
+</html>

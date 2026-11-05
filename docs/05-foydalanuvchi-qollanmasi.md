@@ -1,218 +1,165 @@
-# Uzquiz — Foydalanuvchi qo'llanmasi
+# Uzquiz — Foydalanuvchi qo'llanmasi (2.0)
 
-**Uzquiz** — o'zbek tilidagi zamonaviy viktorina o'yini. O'yin 6 raund va 42 ta savoldan iborat. Rasmli savollar, umumiy bilim, so'z zanjiri, kino, musiqa va yashirin mavzu bor. Tez va to'g'ri javob bering, ko'proq ochko to'plang va o'z rekordingizni yangilang!
+**Uzquiz** — o'zbek tilidagi zamonaviy viktorina o'yini. O'yin **savollar paketlari**dan iborat. Har bir paket o'z mavzusi, raundlari va savollariga ega. Savollarda rasm, tovush va video bo'lishi mumkin. Paketni tanlang, oching va o'ynang!
+
+**Manzil:** https://alokhon99.github.io/uzquiz/
 
 ---
 
 ## 1. O'yinni ochish va o'rnatish
 
-1. Telefoningizda brauzerni oching (Safari, Chrome yoki boshqasi).
-2. Uzquiz manzilini kiriting. Masalan, kompyuterda ishga tushirilgan bo'lsa: `http://localhost:5173`.
-3. **Telefon ekraniga o'rnatish (ixtiyoriy):**
-   - **iPhone (Safari):** pastdagi «Ulashish» belgisi → **«Bosh ekranga qo'shish»** (Add to Home Screen).
-   - **Android (Chrome):** yuqoridagi ⋮ menyu → **«Ilovani o'rnatish»** yoki **«Bosh ekranga qo'shish»**.
-4. O'rnatilgandan keyin Uzquiz oddiy ilova kabi ochiladi. Birinchi ochilgandan so'ng **internetsiz ham** ishlaydi.
+1. Telefoningizda brauzerni (Safari, Chrome va boshqalar) oching va yuqoridagi manzilni kiriting.
+2. **Telefon ekraniga o'rnatish (ixtiyoriy):**
+   - **iPhone (Safari):** «Ulashish» belgisi → **«Bosh ekranga qo'shish»**.
+   - **Android (Chrome):** ⋮ menyu → **«Ilovani o'rnatish»** yoki **«Bosh ekranga qo'shish»**.
+3. O'rnatilgandan keyin Uzquiz oddiy ilova kabi ochiladi.
 
-> 💡 O'yin vertikal (tik) holatda o'ynash uchun mo'ljallangan.
+> 💡 Rasmli savollar va paketlar ro'yxati bir marta ochilgandan keyin internetsiz ham ishlaydi. Tovush va videoli savollar uchun internet kerak.
 
 ---
 
-## 2. Bosh sahifa
+## 2. Bosh sahifa — paketlar katalogi
 
 | Element | Vazifasi |
 |---|---|
-| **Ismingiz** maydoni | Ismingizni yozing (20 belgigacha). Yozmasangiz, «O'yinchi» deb nomlanasiz. Ism keyingi safar uchun eslab qolinadi. |
-| 🚀 **O'yinni boshlash** | Yangi o'yinni boshlaydi. |
-| ▶ **Davom ettirish** | Faqat tugallanmagan o'yin bo'lsa ko'rinadi. Qaysi raund, qaysi savol va necha ochko to'planganini ko'rsatadi. |
-| 🏆 **Eng yaxshi natija** | Sizning eng yuqori ochkongiz. |
-| 📖 **Qanday o'ynaladi?** | O'yin qoidalarining qisqacha tavsifi. |
-| 🏆 **Rekordlar** | Eng yaxshi 10 natija. |
-| ⚙️ **Sozlamalar** | Ovoz, tebranish va taymerni yoqish yoki o'chirish. |
+| 🏆 📖 ⚙️ (yuqorida) | Rekordlar, «Qanday o'ynaladi?» va Sozlamalar |
+| **▶ Davom ettirish** qatori | Tugallanmagan o'yinlaringiz: paket, raund va ochko |
+| 🔍 **Paket qidirish** | Paket nomi yoki tavsifidagi so'z bo'yicha qidirish |
+| **Toifalar** | Hammasi, Umumiy bilim, Musiqa, Mantiq va diqqat va boshqalar |
+| **Paket kartasi** | Muqova, nom, qisqa tavsif, savollar soni, taxminiy vaqt, media belgilari |
 
-> ⚠️ Tugallanmagan o'yin bo'lganda **«O'yinni boshlash»** bosilsa, ilova tasdiqlash so'raydi. **«Ha, yangi o'yin»** tugmasini bossangiz, eski o'yin o'chadi. **«Bekor qilish»** tugmasi uni saqlab qoladi.
-
----
-
-## 3. O'yin tuzilishi
-
-| Raund | Nomi | Nima qilish kerak | Vaqt |
-|---|---|---|---|
-| 1 | 🖼️ **Rasmli savollar** | Rasmga qarang va 4 ta variantdan to'g'ri javobni tanlang | 20 soniya |
-| 2 | 🧠 **Bilimdon** | Umumiy bilim savollari, 4 ta variant | 30 soniya |
-| 3 | 🔗 **So'z zanjiri** | Javobni **yozing**. Har bir keyingi javob oldingi javobning **oxirgi harfi** bilan boshlanadi | 45 soniya |
-| 4 | 🎬 **Kino olami** | Kino haqidagi savollar, 4 ta variant | 30 soniya |
-| 5 | 🎵 **Musiqa sadosi** | Musiqa haqidagi savollar, 4 ta variant | 30 soniya |
-| 6 | 🕵️ **Yashirin mavzu** | 1–6-savollarning javoblari bitta yashirin mavzuga bog'liq. 7-savolda o'sha mavzuni **yozing** | 30 soniya (7-savol: 60 soniya) |
-
-Har bir raundda **7 ta savol** bor. Raund boshlanishidan oldin ma'lumot kartasi chiqadi: raund raqami, nomi, qoidasi va har bir savolga beriladigan vaqt. Tayyor bo'lgach, **«Boshlash»** tugmasini bosing.
+### Kartadagi belgilar
+| Belgi | Ma'nosi |
+|---|---|
+| **Bepul** | Paket bepul |
+| **Yangi** | Paket so'nggi 14 kun ichida qo'shilgan |
+| **Davom ettirish** | Bu paketda tugallanmagan o'yiningiz bor |
+| 🖼️ 🎵 🎬 | Paketda rasm, tovush yoki video savollar bor |
+| 🏆 105 | Shu paketdagi eng yaxshi natijangiz |
 
 ---
 
-## 4. Savol ekrani
+## 3. Paket sahifasi
 
-```
-┌───────────────────────────────────┐
-│ ✕  RAUND 1 · RASMLI SAVOLLAR  ⭐45 │  ← chiqish, raund nomi, jami ochko
-│    Savol 3 / 7                     │
-│ ▓▓▓▓▓▓▓░░░░░░░░                    │  ← raunddagi jarayon
-│         ( 17 )   🔥 3 ketma-ket    │  ← taymer va ketma-ketlik
-│ ┌───────────────────────────────┐ │
-│ │            🐪                  │ │  ← rasm (1-raund)
-│ │  Cho'lda yashaydigan bu hayvon │ │
-│ └───────────────────────────────┘ │
-│ [A] Tuya                           │
-│ [B] Ot                             │  ← javob variantlari
-│ [C] Eshak                          │
-│ [D] Qo'y                           │
-└───────────────────────────────────┘
-```
+Paketga teginsangiz, uning sahifasi ochiladi:
+- muqova, toifa, yosh chegarasi (masalan, **6+**) va narx (**Bepul**);
+- tavsif, raundlar, savollar soni va taxminiy o'yin vaqti;
+- paketdagi media turlari va raundlar ro'yxati;
+- shu paketdagi eng yaxshi natijangiz.
 
-### 4.1 Variantli savollar (1, 2, 4, 5-raundlar va 6-raundning 1–6-savollari)
-- To'g'ri deb hisoblagan variantingizga **bir marta** teging.
-- Javob berganingizdan so'ng:
-  - 🟩 **yashil** rang — to'g'ri javob;
-  - 🟥 **qizil** rang — siz tanlagan noto'g'ri javob.
-- Har bir yangi o'yinda variantlar tartibi aralashtiriladi.
+**Ismingizni** yozing va **🚀 O'ynash** tugmasini bosing. Tugallanmagan o'yin bo'lsa, **▶ Davom ettirish** yoki **🔄 Qaytadan boshlash** tugmalari chiqadi.
 
-### 4.2 Yozma savollar (3-raund va 6-raundning 7-savoli)
-- Yordam qatori javob **qaysi harf bilan boshlanishi**ni va **necha harfdan** iboratligini ko'rsatadi. Masalan: *Javob «T» harfi bilan boshlanadi · 7 ta harf*.
-- Kataklar soni harflar soniga teng. O'zbek alifbosida **sh, ch, o', g'** bitta harf hisoblanadi. Masalan, «Toshkent» so'zi 7 harfdan iborat: T-o-**sh**-k-e-n-t.
-- Javobni yozing va **«Javob berish»** tugmasini yoki klaviaturadagi **Enter** tugmasini bosing.
-- Javobni bilmasangiz, **«O'tkazib yuborish»** tugmasini bosing (0 ochko).
-- Katta-kichik harf ahamiyatsiz: `toshkent`, `TOSHKENT`, `Toshkent` — hammasi to'g'ri.
-- Tutuq belgisining istalgan shakli qabul qilinadi: `o'`, `oʻ`, `o’`, `` o` ``.
-- Ayrim savollarda muqobil javoblar ham qabul qilinadi (masalan, «Navoiy» yoki «Alisher Navoiy»).
-- Bo'sh javob yuborilmaydi: maydon «silkinadi» va savol davom etadi.
-
-### 4.3 So'z zanjiri (3-raund) haqida
-Har bir keyingi javob oldingi javobning oxirgi harfi bilan boshlanadi:
-
-> **Toshken*t*** → ***T*arvu*z*** → ***Z*ebr*a*** → …
-
-Shuning uchun oldingi javob keyingi savolga ham yordam beradi!
-
-### 4.4 Yashirin mavzu (6-raund)
-Birinchi 6 ta savolga javob berayotganda ularni nima birlashtirishini o'ylang. 7-savolda o'sha umumiy mavzuni yozing. Bu savol **20 ochko** (ikki baravar) beradi. Javobdan keyin yashirin mavzu ochiladi 🕵️.
-
-### 4.5 Javobdan keyin
-Pastda natija paneli chiqadi:
-- **«To'g'ri! 🎉»**, **«Noto'g'ri 😕»**, **«Vaqt tugadi ⏰»** yoki **«O'tkazib yuborildi ⏭️»**;
-- olingan ochko (+15, +0 va hokazo);
-- to'g'ri javob va ba'zan qiziqarli fakt 💡;
-- **«Keyingi →»** tugmasi — keyingi savolga o'tish.
-
-### 4.6 Taymer
-- Doira shaklidagi taymer qolgan soniyalarni ko'rsatadi.
-- Oxirgi **5 soniyada** taymer qizil rangga kiradi va tiqillaydi.
-- Vaqt tugasa, javob noto'g'ri hisoblanadi (0 ochko) va to'g'ri javob ko'rsatiladi.
-- Boshqa ilovaga o'tsangiz yoki chiqish oynasi ochilsa, taymer **avtomatik to'xtaydi**. Qaytganingizda davom etadi.
+📤 tugmasi paket havolasini do'stlaringizga yuboradi. Havola orqali do'stingiz to'g'ridan-to'g'ri shu paketga tushadi.
 
 ---
 
-## 5. Ochkolar
+## 4. Raundlar va savol turlari
+
+Har bir raund boshlanishidan oldin ma'lumot kartasi chiqadi: raund raqami, nomi, qoidasi, savollar soni, vaqt va ochko. **«Boshlash»** tugmasini bosing.
+
+### Raund turlari
+| Tur | Qoida |
+|---|---|
+| ⭐ **Oddiy** | Har xil savollar |
+| 🔗 **So'z zanjiri** | Javobni yozasiz. Har bir keyingi javob oldingi javobning **oxirgi harfi** bilan boshlanadi |
+| 🕵️ **Yashirin mavzu** | Raund savollarining javoblari bitta mavzuga bog'liq. Oxirgi savolda o'sha mavzuni yozasiz (odatda ikki baravar ochko) |
+
+### Savol turlari
+| Tur | Qanday javob beriladi |
+|---|---|
+| **Variantli** | 2–6 ta variantdan bittasiga teging |
+| **Ha / Yo'q** | «✓ Ha, to'g'ri» yoki «✕ Yo'q, noto'g'ri» tugmasini bosing |
+| **Yozma javob** | Javobni yozing va **«Javob berish»** yoki **Enter** tugmasini bosing. Javob qaysi harf bilan boshlanishi va necha harfdan iboratligi ko'rsatiladi |
+
+Yozma javoblarda katta-kichik harf va tutuq belgisining shakli (`o'`, `oʻ`, `o’`) ahamiyatsiz. O'zbek alifbosida **sh, ch, o', g'** bitta harf hisoblanadi.
+
+---
+
+## 5. Rasm, tovush va video savollar
+
+| Media | Nima qilish kerak |
+|---|---|
+| 🖼️ **Rasm** | Rasm yuklanguncha kuting. Taymer rasm ko'ringanda boshlanadi |
+| 🎵 **Tovush** | **▶** tugmasini bosing va tinglang. Taymer tovush boshlanganda ishga tushadi |
+| 🎬 **Video** | Video ustidagi **▶** tugmasini bosing. Video ekranda o'ynaydi, taymer video bilan birga boshlanadi |
+
+- **⏸ Kutish:** tovush yoki video bosilmaguncha taymer kulrang bo'lib turadi va vaqt ketmaydi.
+- **🔁 Qayta (1):** tugagandan keyin tovush yoki videoni yana tinglash yoki ko'rish mumkin. Qavs ichida qolgan urinishlar soni yoziladi. Urinish tugasa, tugma yo'qoladi.
+- **Sekin internet:** video yoki tovush yuklanayotganda taymer to'xtab turadi, ya'ni vaqtingiz behuda ketmaydi.
+- **Media yuklanmasa:** «Media yuklanmadi 📡» xabari va **«Jarimasiz o'tkazish»** tugmasi chiqadi. Bu savol natijaga umuman ta'sir qilmaydi.
+- Javob berishingiz bilan tovush yoki video to'xtaydi.
+- Ba'zi savollarda javobdan keyin qo'shimcha rasm, tovush yoki video ko'rsatiladi.
+
+> 🔊 Tovush eshitilmasa, telefon ovozini va iPhone'dagi «ovozsiz» tugmasini tekshiring.
+
+---
+
+## 6. Taymer va ochkolar
+
+- Doiradagi raqam qolgan soniyalarni ko'rsatadi. Oxirgi 5 soniyada taymer qizaradi.
+- Vaqt tugasa, javob noto'g'ri hisoblanadi.
+- Boshqa ilovaga o'tsangiz yoki chiqish oynasi ochilsa, taymer to'xtaydi.
 
 | Holat | Ochko |
 |---|---|
-| To'g'ri javob | **10** + tezlik bonusi (0–5) |
-| Yashirin mavzu (6-raund, 7-savol) | **20** + tezlik bonusi (0–5) |
-| Noto'g'ri / o'tkazib yuborilgan / vaqt tugagan | 0 |
+| To'g'ri javob | Raund ochkosi (odatda **10**, ba'zi raundlarda 15) + tezlik bonusi **0–5** |
+| Yashirin mavzu savoli | Odatda **20** + tezlik bonusi |
+| Noto'g'ri / o'tkazilgan / vaqt tugagan | 0 |
+| Media yuklanmagan savol | Hisobga olinmaydi |
 
-**Tezlik bonusi:** qancha tez javob bersangiz, shuncha ko'p bonus olasiz. Vaqtning boshida javob bersangiz, +5 bonus olasiz. Vaqt tugashiga yaqin javob bersangiz, bonus +1 ga tushadi.
-
-**Maksimal natija:** 640 ochko. Taymer o'chirilgan bo'lsa, bonus berilmaydi va maksimal natija 430 ochko bo'ladi.
-
-🔥 **Ketma-ketlik:** ketma-ket 3 va undan ko'p to'g'ri javob bersangiz, «🔥 N ketma-ket» belgisi chiqadi.
+Ba'zi paketlarda tezlik bonusi o'chirilgan bo'ladi. 🔥 **N ketma-ket** belgisi 3 va undan ko'p to'g'ri javob ketma-ket berilganda chiqadi.
 
 ---
 
-## 6. Raund va o'yin natijalari
+## 7. Natijalar
 
-**Raund yakunida** quyidagilar ko'rsatiladi: to'g'ri javoblar soni (masalan, 5 / 7), raundda olingan ochko va jami ochko. **«Keyingi raund →»** tugmasini bosing. 6-raunddan keyin bu tugma **«🏁 Natijalarni ko'rish»** deb nomlanadi.
+**Raund yakunida:** to'g'ri javoblar soni, raund ochkosi va jami ochko ko'rsatiladi. Keyin **«Keyingi raund →»** tugmasini bosing.
 
-**O'yin yakunida:**
-- jami ochko va maksimal natija;
-- to'g'ri javoblar soni va aniqlik foizi;
-- 1–3 ta yulduz ⭐;
-- har bir raund bo'yicha natija;
-- **unvoningiz:**
+**Paket yakunida:**
+- jami ochko va paketdagi maksimal ochko;
+- to'g'ri javoblar soni, aniqlik foizi, 1–3 yulduz va har bir raund bo'yicha natija;
+- **unvon:** 👑 Bilimlar sultoni (90%+), 🧠 Zukko (70%+), 📚 Bilimdon (50%+), 🔍 Izlanuvchi (30%+), 🌱 Yosh bilimdon;
+- **«✨ Sizga yoqishi mumkin»** — o'xshash paketlar;
+- 🔄 **Qayta o'ynash**, 📤 **Ulashish** (natija va paket havolasi), 📦 **Paketlar** tugmalari.
 
-| Aniqlik | Unvon |
-|---|---|
-| 90% va undan yuqori | 👑 Bilimlar sultoni |
-| 70–89% | 🧠 Zukko |
-| 50–69% | 📚 Bilimdon |
-| 30–49% | 🔍 Izlanuvchi |
-| 30% dan kam | 🌱 Yosh bilimdon |
-
-Aniqlik 70% va undan yuqori bo'lsa, ekranda konfetti 🎊 uchadi. Natijangiz oldingi eng yaxshi natijadan yuqori bo'lsa, **«🏆 Yangi rekord!»** yozuvi chiqadi.
-
-Tugmalar:
-- 🔄 **Qayta o'ynash** — xuddi shu ism bilan yangi o'yinni boshlaydi;
-- 📤 **Ulashish** — natijangizni do'stlaringizga yuboradi (telefonning ulashish menyusi orqali). Bu menyu bo'lmasa, matn nusxalanadi;
-- 🏠 **Bosh sahifa** — bosh sahifaga qaytadi.
+Natijangiz shu paketdagi eng yaxshi natijadan yuqori bo'lsa, **«🏆 Yangi rekord!»** yozuvi chiqadi.
 
 ---
 
-## 7. O'yindan chiqish va davom ettirish
+## 8. O'yindan chiqish va davom ettirish
 
-- Istalgan vaqtda yuqori chap burchakdagi **✕** tugmasini bosing.
-- Oyna ochiladi:
-  - **«Davom etish»** — o'yinga qaytish (taymer qolgan joyidan davom etadi);
-  - **«Chiqish»** — bosh sahifaga chiqish. Natija **saqlanadi**.
-- O'yin har bir javobdan keyin avtomatik saqlanadi. Telefon o'chib qolsa yoki brauzer yopilsa ham natija saqlanib qoladi.
-- Qaytish uchun bosh sahifada **«▶ Davom ettirish»** tugmasini bosing.
-- Savol o'rtasida chiqib ketgan bo'lsangiz, o'sha savol yangi, to'liq vaqt bilan qayta boshlanadi.
+- O'yin paytida **✕** tugmasini yoki telefonning **«Orqaga»** tugmasini bosing. Ochilgan oynada **«Davom etish»** yoki **«Chiqish»** ni tanlang.
+- O'yin har bir javobdan keyin **avtomatik saqlanadi**. Bir nechta paketni parallel o'ynashingiz mumkin, ularning har biri alohida saqlanadi.
+- Qaytish uchun bosh sahifadagi **▶ Davom ettirish** qatoriga yoki paket sahifasidagi **▶ Davom ettirish** tugmasiga bosing.
 
 ---
 
-## 8. Rekordlar
+## 9. Rekordlar va sozlamalar
 
-- **Rekordlar** bo'limida eng yaxshi 10 natija saqlanadi: ism, ochko, sana va to'g'ri javoblar soni.
-- 🥇🥈🥉 Dastlabki uchta o'rin oltin, kumush va bronza rangda belgilanadi.
-- **«🗑️ Rekordlarni tozalash»** tugmasi barcha natijalarni o'chiradi (avval tasdiqlash so'raladi).
+- **🏆 Rekordlar:** eng yaxshi natijalar. Paket nomini bosib, faqat shu paket natijalarini ko'rish mumkin. **«Rekordlarni tozalash»** tugmasi hammasini o'chiradi.
+- **⚙️ Sozlamalar:**
+  - **Ovoz** — o'yin tovushlarini yoqish yoki o'chirish;
+  - **Tebranish** — javob berganda tebranish;
+  - **Taymer** — o'chirilsa, vaqt cheklanmaydi va bonus berilmaydi (keyingi yangi o'yindan boshlab).
 
----
-
-## 9. Sozlamalar
-
-| Sozlama | Tavsif |
-|---|---|
-| 🔊 **Ovoz** | Javob, taymer va g'alaba ovozlari |
-| 📳 **Tebranish** | Javob berganda telefon tebranadi (qo'llab-quvvatlaydigan telefonlarda) |
-| ⏱️ **Taymer** | O'chirilsa, savollarga vaqt cheklovi qo'yilmaydi va tezlik bonusi berilmaydi. Bu sozlama **keyingi yangi o'yindan** boshlab qo'llaniladi |
-
-Sozlamalar avtomatik saqlanadi.
+> ℹ️ Avvalgi versiyadagi o'yiningiz va rekordlaringiz avtomatik ravishda **«Uzquiz Klassik»** paketiga o'tkazilgan.
 
 ---
 
 ## 10. Ko'p beriladigan savollar
 
-**Internet kerakmi?**
-Faqat birinchi ochish uchun kerak. Keyin o'yin internetsiz ishlaydi.
+**Paketlar pullikmi?**
+Hozircha barcha paketlar bepul. Pullik paketlar keyingi versiyada qo'shiladi.
+
+**Video yoki tovush o'ynamayapti. Nima qilish kerak?**
+▶ tugmasini yana bir marta bosing va internet aloqasini tekshiring. Media baribir yuklanmasa, savolni jarimasiz o'tkazing.
 
 **Ma'lumotlarim qayerda saqlanadi?**
-Faqat telefoningizda (brauzer xotirasida). Hech qanday ma'lumot tashqariga yuborilmaydi.
+Faqat telefoningizda. Hech qanday shaxsiy ma'lumot yuborilmaydi.
 
-**Javobim to'g'ri edi, lekin qabul qilinmadi. Nima uchun?**
-Imloni tekshiring. Javob lotin yozuvida bo'lishi kerak (masalan, «Samarqand», «Самарканд» emas). Ortiqcha so'z qo'shmang.
-
-**Natijalarim yo'qolib qoldi. Nima uchun?**
-Brauzer tarixi yoki sayt ma'lumotlari tozalangan bo'lsa, rekordlar va saqlangan o'yin ham o'chadi.
-
-**Ovoz chiqmayapti. Nima qilish kerak?**
-Sozlamalarda «Ovoz» yoqilganini tekshiring. iPhone'da yon tomondagi «ovozsiz» tugmasi o'chiq bo'lishi kerak.
-
-**Tebranish ishlamayapti. Nima uchun?**
-Ba'zi qurilmalar, jumladan iPhone, brauzer orqali tebranishni qo'llab-quvvatlamaydi.
+**Do'stimga paketni qanday yuboraman?**
+Paket sahifasidagi 📤 tugmasini yoki natija ekranidagi «Ulashish» tugmasini bosing.
 
 ---
-
-## 11. Qisqa yo'riqnoma
-
-1. Ismingizni yozing → **O'yinni boshlash**.
-2. Raund kartasini o'qing → **Boshlash**.
-3. Variantni tanlang yoki javobni yozing → **Keyingi**.
-4. Har 7 savoldan keyin raund natijasi → **Keyingi raund**.
-5. 6 ta raunddan keyin unvoningiz va ochkoingizni ko'ring → **Ulashish** yoki **Qayta o'ynash**.
 
 **Omad! Bilimingiz bilan faxrlaning! 🇺🇿**

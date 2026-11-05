@@ -1,101 +1,143 @@
-# Uzquiz — Savollar muharriri qo'llanmasi
+# Uzquiz — Paketlar muharriri qo'llanmasi (2.0)
 
-Savollar muharriri yordamida o'yindagi barcha 42 ta savolni dasturlashsiz o'zgartirishingiz mumkin. Savollarni tahrirlaysiz, xatolarni tekshirasiz, o'yinda sinab ko'rasiz va bitta tugma bilan saytga nashr qilasiz.
+Muharrir yordamida jamoangiz dasturlashsiz yangi savollar paketlarini yaratadi, savollarga rasm, tovush va video qo'shadi, o'yinda sinab ko'radi va saytga nashr qiladi.
 
 **Manzil:** https://alokhon99.github.io/uzquiz/admin.html
-(Bu sahifa o'yinda ko'rinmaydi va qidiruv tizimlariga berilmaydi.)
+(O'yinda bu sahifaga havola yo'q va u qidiruv tizimlariga berilmaydi.)
 
 ---
 
 ## 1. Bir martalik sozlash: GitHub token
 
-Nashr qilish uchun GitHub «fine-grained» token kerak. U faqat Uzquiz repozitoriyasidagi fayllarni yozishga ruxsat beradi.
+Saqlash va nashr qilish uchun GitHub «fine-grained» token kerak:
 
 1. https://github.com/settings/personal-access-tokens/new sahifasini oching.
 2. **Token name:** `Uzquiz muharriri`. **Expiration:** masalan, 90 kun.
 3. **Repository access** → **Only select repositories** → `alokhon99/uzquiz`.
-4. **Permissions** → **Repository permissions** → **Contents** → **Read and write**.
-5. **Generate token** tugmasini bosing. `github_pat_…` bilan boshlanadigan tokenni nusxalang.
+4. **Permissions** → **Contents** → **Read and write**.
+5. **Generate token** tugmasini bosing va `github_pat_…` bilan boshlanadigan tokenni nusxalang.
 
-> 🔒 Tokenni hech kimga bermang. Muharrir uni faqat sizning brauzeringizda saqlaydi va faqat `api.github.com` manziliga yuboradi. «Shu qurilmada eslab qolish» belgilanmasa, brauzer yopilganda token o'chadi. Token yo'qolsa yoki shubha tug'ilsa, uni GitHub'da o'chirib (Revoke), yangisini yarating.
+> 🔒 Token faqat sizning brauzeringizda saqlanadi va faqat `api.github.com` ga yuboriladi. Uni hech kimga bermang. Shubha tug'ilsa, GitHub'da tokenni o'chirib (Revoke), yangisini yarating.
 
 ---
 
-## 2. Muharrir ekrani
+## 2. Paketlar ro'yxati
 
-| Qism | Vazifasi |
+Muharrir ochilganda barcha paketlar ko'rinadi:
+
+| Holat | Ma'nosi |
 |---|---|
-| **Holat qatori** | ✓ Xato yo'q / ⛔ N ta xato, ⚠️ ogohlantirishlar, ✎ o'zgarishlar soni |
-| **Raund tugmalari (1–6)** | Raundni tanlash. Qizil raqam — shu raunddagi xatolar soni |
-| **Raund sozlamalari** | Belgi (emoji), nom, vaqt (5–120 soniya), rang, tavsif. 6-raundda **yashirin mavzu** ham bor |
-| **Savol kartalari (7 ta)** | Rasm, savol matni, javoblar, qiziqarli fakt. ↑ ↓ — savol tartibini o'zgartirish |
-| **Pastki panel** | ▶ **O'yinda sinash** va 🚀 **Nashr qilish** |
+| **Qoralama** | Ishlanmoqda. O'yinchilarga ko'rinmaydi |
+| **Ko'rib chiqishda** | Tayyor, egasi tasdiqlashi kutilmoqda. O'yinchilarga ko'rinmaydi |
+| **Nashr qilingan** | Katalogda, o'yinchilarga ko'rinadi |
+| **Arxiv** | Katalogdan yashirilgan |
+| ✎ **Saqlanmagan** | Shu qurilmada saqlanmagan o'zgarishlar bor |
+| **Faqat shu qurilmada** | Yangi paket, hali GitHub'ga saqlanmagan |
 
-### Savolni tahrirlash
-- **Variantli savollar:** 4 ta variantni yozing va to'g'ri javobni chapdagi **A / B / C / D** harfini bosib belgilang. To'g'ri variant yashil rangda ko'rinadi.
-- **Yozma savollar** (3-raund va 6-raundning 7-savoli): **to'g'ri javob**ni yozing. Kerak bo'lsa, **muqobil javoblar**ni vergul bilan kiriting (masalan, `Navoiy` asosiy javob, `Alisher Navoiy` esa muqobil).
-- **Rasm:** 1-raundda har bir savolga emoji rasm majburiy (🍎, 🐘…). Bayroq kabi maxsus chizmani emoji bilan almashtirish mumkin.
-- **Qiziqarli fakt** ixtiyoriy. U javobdan keyin 💡 belgisi bilan ko'rsatiladi.
-
-### Avtomatik tekshiruvlar
-Muharrir har bir o'zgarishni darhol tekshiradi. Xato bo'lsa, nashr qilish tugmasi o'chadi:
-
-| Tekshiruv | Misol |
-|---|---|
-| Bo'sh matn yoki variant | «Savol matni bo'sh» |
-| Takrorlanuvchi variantlar | «Javob variantlari takrorlanmasligi kerak» |
-| 1-raundda rasm yo'q | «1-raundda har bir savolga rasm kerak» |
-| **So'z zanjiri** (3-raund) | «Javob «Z» harfi bilan boshlanishi kerak (oldingi javob — «Tarvuz»)» |
-| **Yashirin mavzu** (6-raund) | 7-savol javobi yashirin mavzuga teng bo'lishi kerak |
-| Mavzu oldindan ko'rinib qolishi (⚠️) | Mavzu so'zi 1–6-savollarda uchrasa, ogohlantirish chiqadi |
-
-> 🔗 3-raundda bitta javobni o'zgartirsangiz, odatda **keyingi** savol ham o'zgarishi kerak bo'ladi. Har bir kartaning pastida keyingi javob qaysi harf bilan boshlanishi kerakligi yozilgan.
+**＋ Yangi paket** → nomini yozing. ID (havola uchun) avtomatik taklif qilinadi. ID'ni keyin o'zgartirib bo'lmaydi.
 
 ---
 
-## 3. Qoralama
+## 3. Paketni tahrirlash
 
-- Barcha o'zgarishlar shu brauzerda **avtomatik saqlanadi** (qoralama). Sahifani yopib, keyin qaytsangiz, ishingiz tiklanadi.
-- O'zgargan savollar «• o'zgargan» belgisi bilan ko'rsatiladi.
-- **«O'zgarishlarni bekor qilish»** — qoralamani o'chiradi va saytdagi versiyani qayta yuklaydi.
-- **«questions.js ni yuklab olish»** — savollar faylining zaxira nusxasini kompyuterga saqlaydi.
+Yuqoridagi yorliqlar: **📦 Paket**, raundlar (**1. …**, **2. …**) va **＋ Raund**. Qizil raqam — o'sha qismdagi xatolar soni.
+
+### 📦 Paket yorlig'i
+- Nomi, toifa, tavsif (katalogda ko'rinadi), yosh chegarasi (0+, 6+, 12+, 16+).
+- **Tezlik bonusi** — tez javob uchun +5 gacha ochko.
+- **To'g'ri javobni ko'rsatish** — xato javobdan keyin to'g'ri javob ko'rsatilsinmi.
+- **Muqova** — emoji yoki rasm.
+- **📄 Nusxa olish** — paketdan yangi ID bilan nusxa yaratadi (media fayllari bilan birga).
+- **↩️ Qoralamani bekor qilish** — saqlanmagan o'zgarishlarni o'chiradi.
+
+### Raund yorlig'i
+- Belgi, nom, vaqt (5–120 soniya), rang, tavsif va to'g'ri javob uchun ochko (1–100).
+- **Raund turi:**
+  - **Oddiy** — har qanday savollar.
+  - **So'z zanjiri** — barcha savollar yozma javobli. Keyingi javob oldingi javobning oxirgi harfi bilan boshlanishi kerak.
+  - **Yashirin mavzu** — **yashirin mavzu** maydoni paydo bo'ladi. Oxirgi savol («Yakuniy») mavzuning o'zini so'raydi va uning javobi mavzuga teng bo'lishi kerak.
+- **← Avvalga / Keyinga →** — raund tartibini o'zgartirish. **🗑️ Raundni o'chirish** — raundni o'chirish.
+- Paketda 1–10 raund, har bir raundda 1–20 savol bo'ladi.
+
+### Savollar
+- Qo'shish: **＋ Variantli**, **＋ Ha / Yo'q**, **＋ Yozma**. Savol turini kartadagi ro'yxatdan ham o'zgartirish mumkin.
+- **Variantli:** 2–6 ta variant. To'g'ri variantni chapdagi harf bilan belgilang. Variantni **＋ Variant qo'shish** yoki ✕ bilan qo'shish va o'chirish mumkin.
+- **Ha / Yo'q:** to'g'ri javobni belgilang.
+- **Yozma:** to'g'ri javob va vergul bilan ajratilgan muqobil javoblar (masalan, `Navoiy` asosiy, `Alisher Navoiy` muqobil).
+- ↑ ↓ — tartibni o'zgartirish, 🗑️ — o'chirish.
+- **Qiziqarli fakt** — javobdan keyin 💡 bilan ko'rsatiladi.
 
 ---
 
-## 4. O'yinda sinash
+## 4. Media qo'shish
 
-**▶ O'yinda sinash** tugmasi o'yinni yangi oynada **ko'rib chiqish rejimida** ochadi. Yuqorida sariq «Ko'rib chiqish rejimi» yozuvi bo'ladi. O'yin tanlangan raunddan boshlanadi va qoralamadagi savollarni ishlatadi.
+Har bir savolda ikkita media joyi bor:
+- **📎 Savol mediasi** — savol bilan birga ko'rsatiladi;
+- **✨ Javobdan keyingi media** — javobdan keyin ochiladi (masalan, to'liq rasm yoki qo'shiq naqarotidan parcha).
 
-- Bu rejimdagi natijalar haqiqiy rekordlarga **qo'shilmaydi**.
-- Boshqa o'yinchilar sizning qoralamangizni **ko'rmaydi**. U faqat nashrdan keyin hammaga ko'rinadi.
+Media turini tanlang (**Yo'q / Emoji / Rasm / Audio / Video**), so'ng **📁 Fayl tanlash** tugmasini bosing:
+
+| Tur | Formatlar | Cheklov | Avtomatik |
+|---|---|---|---|
+| 🖼️ Rasm | JPG, PNG, WebP | 5 MB | WebP formatiga o'giriladi, eng ko'pi bilan 1280 px |
+| 🎵 Audio | MP3, M4A, OGG, WAV | 60 soniya, 5 MB | — |
+| 🎬 Video | MP4 (H.264), WebM | 60 soniya, 30 MB | — |
+
+- **Tavsif (alt matn)** — rasm va video uchun majburiy (ko'zi ojiz o'yinchilar uchun).
+- **Boshlanish / Tugash (s)** — audio yoki videoning faqat bir qismini ijro etish uchun.
+- **Qayta ijro** — o'yinchi necha marta qayta tinglay yoki ko'ra olishi (0–5, odatda 1).
+- **Huquq ma'lumoti (majburiy):** manba, litsenziya (O'zimizniki, Litsenziyalangan, Jamoat mulki, Creative Commons) va huquq egasi.
+
+> ⚖️ **Muhim:** film va qo'shiqlardan olingan qisqa parchalar ham mualliflik huquqi bilan himoyalangan. Faqat o'zingiz tayyorlagan, litsenziyasi bor yoki jamoat mulki bo'lgan media'dan foydalaning. Pullik paketlarni sotishdan oldin yurist bilan maslahatlashing.
+
+Yuklangan fayllar nashrgacha **faqat shu brauzerda** saqlanadi. Kartada «hali nashr qilinmagan» deb yoziladi.
 
 ---
 
-## 5. Nashr qilish
+## 5. Avtomatik tekshiruvlar
 
-1. Xato qolmaganiga ishonch hosil qiling (✓ Xato yo'q).
-2. **🚀 Nashr qilish** tugmasini bosing.
-3. Qisqa izoh yozing (masalan, «2-raund savollari yangilandi»).
-4. GitHub tokenni joylashtiring. Kerak bo'lsa, **«Shu qurilmada eslab qolish»** belgisini qo'ying.
-5. **Nashr qilish** tugmasini bosing. Jarayon ro'yxatda ko'rinadi:
-   - ✓ Repozitoriy: alokhon99/uzquiz
-   - ✓ main: saqlandi
-   - ✓ gh-pages: saqlandi
-6. Sayt odatda **1–10 daqiqada** yangilanadi. O'yinchilar sahifani qayta ochganda yangi savollarni ko'radi.
+Muharrir har bir o'zgarishni darhol tekshiradi:
+- bo'sh matn yoki variant, takrorlanuvchi variantlar, belgilanmagan to'g'ri javob;
+- variantlar soni (2–6), raund va savollar soni chegaralari, vaqt va ochko;
+- media: fayl tanlanmagan, alt matn yo'q, huquq ma'lumoti to'ldirilmagan, noto'g'ri qism vaqtlari;
+- so'z zanjiri buzilgan (qaysi harf kerakligi yoziladi);
+- yashirin mavzu: yakuniy javob mavzuga teng emas; ⚠️ mavzu oldingi savollarda ko'rinib qolgan.
+
+Xato bo'lsa, paketni **«Nashr qilingan»** yoki **«Ko'rib chiqishda»** holatida saqlab bo'lmaydi. Lekin **«Qoralama»** sifatida saqlash mumkin.
+
+---
+
+## 6. ▶ Sinash
+
+**▶ Sinash** tugmasi o'yinni yangi oynada **ko'rib chiqish rejimida** ochadi. Yuqorida sariq yozuv bo'ladi va o'yin tanlangan raunddan boshlanadi. Bu rejimda hali nashr qilinmagan rasm, tovush va videolar ham ishlaydi. Natijalar haqiqiy rekordlarga qo'shilmaydi, o'yinchilar esa qoralamani ko'rmaydi.
+
+---
+
+## 7. 🚀 Saqlash va nashr qilish
+
+1. **🚀 Saqlash** tugmasini bosing.
+2. **Holat**ni tanlang: Qoralama, Ko'rib chiqishda, Nashr qilingan yoki Arxiv.
+3. Qisqa izoh yozing va GitHub tokenni joylashtiring.
+4. **Saqlash** tugmasini bosing. Jarayon ro'yxatda ko'rinadi: fayllar yuklanadi → `main` saqlandi → `gh-pages` saqlandi.
+5. «Nashr qilingan» paket saytda odatda **1–10 daqiqada** paydo bo'ladi.
+
+Bitta saqlash GitHub'da bitta commit bo'ladi (paket fayli, yangi media va katalog). Har bir versiya tarixda qoladi, shuning uchun istalgan eski holatga qaytish mumkin.
 
 ### Xatolar
-| Xabar | Sabab va yechim |
+| Xabar | Yechim |
 |---|---|
 | Token noto'g'ri yoki muddati tugagan | Yangi token yarating (1-bo'lim) |
-| Ruxsat yo'q — «Contents: Read and write» | Tokenni tahrirlab, **Contents** uchun **Read and write** ruxsatini bering |
-| Repozitoriy yoki fayl topilmadi | Tokenda `uzquiz` repozitoriyasi tanlanganini tekshiring |
-| Fayl shu payt boshqa joyda o'zgartirildi | Bir necha soniyadan keyin **Qayta urinish** tugmasini bosing |
+| Ruxsat yo'q — «Contents: Read and write» | Tokenga Contents uchun Read and write ruxsatini bering |
+| Repozitoriy topilmadi | Tokenda `uzquiz` repozitoriyasi tanlanganini tekshiring |
+| Repozitoriy shu payt boshqa joyda o'zgardi | Bir oz kutib, **Qayta urinish** tugmasini bosing |
+| Fayl topilmadi — uni qayta yuklang | Brauzer ma'lumotlari tozalangan. Faylni qayta tanlang |
 
 ---
 
-## 6. Dasturchilar uchun eslatma
+## 8. Dasturchilar uchun eslatma
 
-Muharrir bitta faylni ikki branch'ga yozadi: `main` (`app/js/questions.js`) va saytni beruvchi `gh-pages` (`js/questions.js`). Har bir nashr GitHub'da alohida commit bo'lib qoladi, shuning uchun istalgan eski versiyaga qaytish mumkin. Kompyuterda kod ustida ishlashdan oldin GitHub'dagi o'zgarishlarni oling:
+- Paketlar `app/packs/<id>/pack.json`, media fayllar `app/packs/<id>/media/`, katalog esa `app/packs/index.json` faylida saqlanadi. Muharrir bir xil faylni `main` va `gh-pages` branch'lariga yozadi.
+- Kod ustida ishlashdan oldin GitHub'dagi o'zgarishlarni oling:
 
 ```bash
 git pull
