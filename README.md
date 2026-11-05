@@ -34,11 +34,11 @@ Browser suites run inside the open page (served by `serve.mjs` under `/__tests/`
 
 ## Publishing
 - **Content:** the editor commits `pack.json` + media + `index.json` to `main` and `gh-pages` in one commit per branch. Run `git pull` before working locally.
-- **Code:**
+- **Code:** first take in anything the team published from the editor, then push:
   ```bash
-  git push origin main
+  git pull --no-rebase origin main && node tests/run-tests.mjs && git push origin main
   ```
+  Then publish `app/` as a new commit on top of the live `gh-pages`, so the editor's commits there are kept and no force-push is needed:
   ```bash
-  git subtree split --prefix app -b gh-pages && git push origin gh-pages
+  git fetch origin && git push origin "$(git commit-tree "$(git subtree split --prefix app)^{tree}" -p origin/gh-pages -m 'Deploy app/')":refs/heads/gh-pages
   ```
-  If the editor has committed to `gh-pages` meanwhile, merge `origin/main` first so the split includes those commits.
